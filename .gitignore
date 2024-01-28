@@ -31,9 +31,9 @@ api_data/v1
 quantum/version.h
 *.bin
 *.eep
-*.hex
+# *.hex
 *.qmk
-*.uf2
+# *.uf2
 
 # DD config at wrong location
 /keyboards/**/keymaps/*/info.json
