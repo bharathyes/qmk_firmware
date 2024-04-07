@@ -18,7 +18,7 @@ MOUSEKEY_ENABLE = yes
 LEADER_ENABLE = yes
 UNICODE_COMMON = no
 UNICODEMAP_ENABLE = no
-
+TRI_LAYER_ENABLE = yes      # lower + raise gives adjust layer ( tri-layer )
 
 
 # If you want to change the display of OLED, you need to change here
