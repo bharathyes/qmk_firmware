@@ -63,8 +63,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // TAP HOLD
 #define TAPPING_TERM 200
 // #define TAPPING_TERM_PER_KEY
-#define PERMISSIsVE_HOLD_PER_KEY
+#define PERMISSIVE_HOLD_PER_KEY
 // #define HOLD_ON_OTHER_KEY_PRESS
+
+// exploring 
+// #define IGNORE_MOD_TAP_INTERRUPT
+// #define PERMISSIVE_HOLD 
 
 
 
@@ -90,6 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LEADER_TIMEOUT 340
 #define LEADER_NO_TIMEOUT
 
+#define TAPPING_TOGGLE 3  // TT layer shift momentary OR toggle ON/OFF if tapped thrice
 
 // #define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX
 // #define UNICODE_KEY_LNX
