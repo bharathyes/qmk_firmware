@@ -27,7 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // https://docusaurus.qmk.fm/feature_split_keyboard#handedness-by-eeprom
 // #define EE_HANDS
 
-#define QUICK_TAP_TERM 0
 
 #undef RGBLED_NUM
 
@@ -36,9 +35,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // enables QK_MAKE
 #define ENABLE_COMPILE_KEYCODE
 
-
 // TAP HOLD
 #define TAPPING_TERM 200
+#define TAPPING_TOGGLE 2  			// TT layer shift momentary OR toggle ON/OFF if tapped thrice
+#define QUICK_TAP_TERM 0
 // #define TAPPING_TERM_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
 
@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #define ONESHOT_TAP_TOGGLE 2 	/* tapping said times holds key until tapped once again */
-#define ONESHOT_TIMEOUT 2500 	/* time (in ms) befoer the one shot key is released */
+#define ONESHOT_TIMEOUT 2500 	/* time (in ms) before the one shot key is released */
 
 /*
 	Issues with MOD TAP
@@ -71,9 +71,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LEADER_PER_KEY_TIMING
 #define LEADER_TIMEOUT 340
 #define LEADER_NO_TIMEOUT
-
-#define TAPPING_TOGGLE 2  			// TT layer shift momentary OR toggle ON/OFF if tapped thrice
-
 
 
 // Dynamic Macro Recording

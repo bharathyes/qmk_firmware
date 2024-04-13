@@ -9,6 +9,11 @@ enum layer_number {
 };
 
 
+/*
+ * TODO: explore on QMK level "VIM Motions
+ *  eg., 20Down should auto emit down 20 times, etc. 
+ */  
+
 
 /* LAYER SWITCHING 
  *  
@@ -144,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   DM_REC1, DM_REC2, XXXXXXX, KC_MS_U, XXXXXXX, DM_RSTP,                     XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,        XXXXXXX,
   XXXXXXX, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,                     KC_PGUP, KC_HOME, KC_UP,    KC_END,     KC_MS_WH_UP,    KC_BTN1,
   DM_PLY1, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_FIND,                     KC_PGDN, KC_LEFT, KC_DOWN,  KC_RIGHT,   KC_MS_WH_DOWN,  KC_PSCR,
-  DM_PLY2, KC_UNDO, KC_CUT, KC_COPY, XXXXXXX, KC_PASTE,  _______, _______,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,        XXXXXXX,
+  DM_PLY2, KC_UNDO, KC_CUT,  KC_COPY, XXXXXXX, KC_PASTE, _______, _______,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,        XXXXXXX,
                              _______, _______, _______,  _______, _______,  _______, _______, _______
 ),
 
@@ -199,6 +204,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*
 
+TODO:
 Features to explore
 
 
@@ -401,6 +407,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LSFT_T(KC_ENT):
             return TAPPING_TERM + 250;
+        case mo_tg_raise:
+            return 70;
         default:
             return TAPPING_TERM;
     }
