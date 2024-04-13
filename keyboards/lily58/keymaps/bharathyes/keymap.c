@@ -34,8 +34,8 @@ enum layer_number {
 #define ent_sft         LSFT_T(KC_ENT)
 
 #define esc             KC_ESC
-#define l_flower        KC_LBRC
-#define r_flower        KC_RBRC
+#define l_flower        LSFT(KC_LBRC)
+#define r_flower        LSFT(KC_RBRC)
 
 // qmk keycodes
 #define tgl_boot        QK_BOOT     // put into bootloader mode for flashing
