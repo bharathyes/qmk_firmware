@@ -51,11 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* COLEMAK-DH
 * ,-------------------------------------------.                    ,-----------------------------------------.
-* | ESC    |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  -   |
+* | ESC    |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  | BSP  |
 * |-------------------------------------------|                    |-----------------------------------------|
 * | kp_tab |   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   ;  |  '   |
 * |-------------------------------------------|                    |-----------------------------------------|
-* |ctrl_esc|   A  |   R  |   S  |   T  |   G  |-------.    ,-------|   M  |   N  |   E  |   I  |   O  | BSP  |
+* |ctrl_esc|   A  |   R  |   S  |   T  |   G  |-------.    ,-------|   M  |   N  |   E  |   I  |   O  |  -   |
 * |-------------------------------------------|Leader |    |  DEL  |-----------------------------------------|
 * |LShift  |   Z  |  X   |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |  =   |
 * `-----------------------------------------/        /      \      \-----------------------------------------'
@@ -66,10 +66,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 [_COLEMAK] = LAYOUT(
-  esc,          KC_1,   KC_2,   KC_3,    KC_4,     KC_5,                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+  esc,          KC_1,   KC_2,   KC_3,    KC_4,     KC_5,                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
   kp_tab,       KC_Q,   KC_W,   KC_F,    KC_P,     KC_B,                           KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_QUOT,
   ctrl_esc,     LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),  
-                HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O), KC_BSPC,
+                HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O), KC_MINS,
   l_shft,       KC_Z,   KC_X,   KC_C,    KC_D,     KC_V,   QK_LEAD,    KC_DEL,     KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
         LALT_T(KC_ENT), KC_LGUI,    lowers_bs,     KC_SPC,             ent_sft,     mo_tg_raise,     XXXXXXX,    XXXXXXX
 
@@ -102,13 +102,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
  /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * | RST  | BOOT |      |PAUSE |      | DEL  |                    |      | F10  | F11  | F12  |   \  |   /  |
+ * | RST  | BOOT |      |PAUSE |      | DEL  |                    |   \  | F10  | F11  | F12  |   (  |  BSP |  
  * |-----------------------------------------|                    |-----------------------------------------|
- * |   ^  |   &  |   *  |   (  |   )  |  BS  |                    |      |  F7  |  F8  |  F9  |   [  |   ]  |
+ * |   ^  |   &  |   *  |   (  |   )  |  BS  |                    |   [  |  F7  |  F8  |  F9  |   )  |      |
  * |-----------------------------------------|                    |-----------------------------------------|
- * |   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|      |  F4  |  F5  |  F6  |   (  |   )  |
+ * |   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ]  |  F4  |  F5  |  F6  |   {  |      |
  * |-----------------------------------------|   ~   |    |   |   |-----------------------------------------|
- * | MB_1 | MB_L | MB_D | MB_U | MB_R | MB_2 |-------|    |-------|      |  F1  |  F2  |  F3  |   {  |   }  |
+ * | MB_1 | MB_L | MB_D | MB_U | MB_R | MB_2 |-------|    |-------|   /  |  F1  |  F2  |  F3  |   }  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt  | LGUI |LOWER | /Space  /        \(Enter) \  |RAISE |      |      |
  *                   |(Enter)|      |(BS)  |        /          \ Shift  \ |      |      |      |
@@ -116,11 +116,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_LOWER] = LAYOUT(
-    reset_kb,   tgl_boot,   XXXXXXX,    pause,      XXXXXXX,    KC_DEL,                     XXXXXXX,    KC_F10,     KC_F11,     KC_F12, KC_BSLS,    KC_SLSH,
-    KC_CIRC,    KC_AMPR,    KC_ASTR,    KC_LPRN,    KC_RPRN,    KC_BSPC,                    XXXXXXX,    KC_F7,      KC_F8,      KC_F9,  KC_LBRC,    KC_RBRC,
-    KC_GRV,      LGUI_T(KC_EXLM),    LALT_T(KC_AT),  LSFT_T(KC_HASH),    CTL_T(KC_DLR),  MEH_T(KC_PERC),
-                                                                                            XXXXXXX,    KC_F4,      KC_F5,      KC_F6,  KC_LPRN,    KC_RPRN,
-    KC_BTN1,    KC_MS_L,    KC_MS_D,    KC_MS_U,    KC_MS_R,    KC_BTN2, KC_TILD, KC_PIPE,  XXXXXXX,    KC_F1,      KC_F2,      KC_F3,  l_flower,   r_flower,
+    reset_kb,   tgl_boot,   XXXXXXX,    pause,      XXXXXXX,    KC_DEL,                     KC_BSLS,    KC_F10,     KC_F11,     KC_F12, KC_LPRN,    KC_BSPC,
+    KC_CIRC,    KC_AMPR,    KC_ASTR,    KC_LPRN,    KC_RPRN,    KC_BSPC,                    KC_LBRC,    KC_F7,      KC_F8,      KC_F9,  KC_RPRN,    XXXXXXX,
+    KC_GRV,     LGUI_T(KC_EXLM),    LALT_T(KC_AT),  LSFT_T(KC_HASH),    CTL_T(KC_DLR),  MEH_T(KC_PERC),
+                                                                                            KC_RBRC,    KC_F4,      KC_F5,      KC_F6,  l_flower,   XXXXXXX,
+    KC_BTN1,    KC_MS_L,    KC_MS_D,    KC_MS_U,    KC_MS_R,    KC_BTN2, KC_TILD, KC_PIPE,  KC_SLSH,    KC_F1,      KC_F2,      KC_F3,  r_flower,   XXXXXXX,
                              _______, _______, _______, _______, _______,  _______, _______, _______
 ),
 
@@ -173,11 +173,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   /* KEYPAD
  * ,-----------------------------------------.                      ,-----------------------------------------.
- * |      |      |      |      |      | MUTE |                      |      |      |      |  /   |      |      |
+ * |      |      |      |      |      | MUTE |                      |      |      |      |  /   |      | BSP  |
  * |-----------------------------------------|                      |-----------------------------------------|
  * |      |      | Prev | Play | Next | V_UP |                      |      |   7  |   8  |   9  |   *  |      |
  * |-----------------------------------------|                      |-----------------------------------------|
- * |      |      |      |      |      | V_DN |--------.     ,-------|      |   4  |   5  |   6  |   -  |  BS  |
+ * |      |      |      |      |      | V_DN |--------.     ,-------|      |   4  |   5  |   6  |   -  |      |
  * |-----------------------------------------|        |     |       |-----------------------------------------|
  * |      |      |      |      |      |      |--------|     |-------|   0  |   1  |   2  |   3  |   +  |      |
  * `-----------------------------------------/        /      \      \-----------------------------------------'
@@ -187,9 +187,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
   [_KEYPAD] = LAYOUT(
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE,                   XXXXXXX, XXXXXXX, XXXXXXX, KC_PSLS, XXXXXXX, XXXXXXX,
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE,                   XXXXXXX, XXXXXXX, XXXXXXX, KC_PSLS, XXXXXXX, KC_BSPC,
   XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                   XXXXXXX, KC_7,    KC_8,    KC_9,    KC_PAST, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLD,                   XXXXXXX, KC_4,    KC_5,    KC_6,    KC_PMNS, KC_BSPC,
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLD,                   XXXXXXX, KC_4,    KC_5,    KC_6,    KC_PMNS, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_PPLS, XXXXXXX,
                              _______, _______, _______, _______, _______,  _______, _______, _______
   )
@@ -258,60 +258,72 @@ void leader_start_user(void) {
     // Do something when the leader key is pressed
 }
 
+
+// TODO: correct intelliJ action keymaps
 void leader_end_user(void) {
-    if (leader_sequence_one_key(KC_ESC)) {
-        tap_code16(KC_PAUSE);
-    } else if (leader_sequence_two_keys(KC_O, KC_K)) {
-        SEND_STRING("Okay.");
-    }  else if (leader_sequence_two_keys(KC_P, KC_U)) {
+    // ESC
+    if (leader_sequence_one_key(KC_ESC))
+        tap_code16(KC_PAUSE);  
+    // O K
+    else if (leader_sequence_two_keys(KC_O, KC_K))
+        SEND_STRING("Okay."); 
+    // P U
+    else if (leader_sequence_two_keys(KC_P, KC_U))
         SEND_STRING("bharathyes");
-    } else if (leader_sequence_two_keys(KC_P, KC_G)) {
+    // P G
+    else if (leader_sequence_two_keys(KC_P, KC_G))
         SEND_STRING("bharathyes.in@gmail.com");
-    } else if (leader_sequence_two_keys(KC_P, KC_O)) {
+    // P 
+    else if (leader_sequence_two_keys(KC_P, KC_O))
         SEND_STRING("bharathyes@outlook.com");
-    } else if (leader_sequence_two_keys(KC_W, KC_E)) {
+    // W E
+    else if (leader_sequence_two_keys(KC_W, KC_E))
         SEND_STRING("bharathyes@techconative.com");
-    } else if (leader_sequence_two_keys(KC_D, KC_U)) {
+    // D U
+    else if (leader_sequence_two_keys(KC_D, KC_U))
         SEND_STRING("bsrinivasan");
-    } else if (leader_sequence_two_keys(KC_D, KC_E)) {
+    // D E
+    else if (leader_sequence_two_keys(KC_D, KC_E))
         SEND_STRING("bsrinivasan@dalet.com");
-    } else if (leader_sequence_three_keys(KC_D, KC_D, KC_G)) {
+    // D D G
+    else if (leader_sequence_three_keys(KC_D, KC_D, KC_G))
         SEND_STRING("https://start.duckduckgo.com\n");
-    } else if (leader_sequence_two_keys(KC_G, KC_M)) {
-        // open git menu - intellij
+    // G M (open Git IntelliJ)
+    else if (leader_sequence_two_keys(KC_G, KC_M))
         tap_code16(LCTL(LSFT(LALT(KC_GRAVE))));
-    } else if (leader_sequence_two_keys(KC_I, KC_D)) {
-        // start application in run - intellij
+    // I D  (run menu IntelliJ)
+    else if (leader_sequence_two_keys(KC_I, KC_D))
         SEND_STRING(SS_LALT(SS_LSFT("d")));
-    } else if (leader_sequence_two_keys(KC_I, KC_R)) {
-        // start application in debug - intellij
+    // I R (start in debug)
+    else if (leader_sequence_two_keys(KC_I, KC_R))
         SEND_STRING(SS_LALT(SS_LSFT("x")));
-    } else if (leader_sequence_two_keys(KC_I, KC_C)) {
-        // run select menu - intellij
+    // I C  (run select menu)
+    else if (leader_sequence_two_keys(KC_I, KC_C))
         tap_code16(LALT(LSFT(KC_F10)));
-    } else if (leader_sequence_two_keys(KC_I, KC_X)) {
-        // debug select menu - intellij
+    // I X  (debug select menu)
+    else if (leader_sequence_two_keys(KC_I, KC_X))
         tap_code16(LALT(LSFT(KC_F9)));
-    } else if (leader_sequence_two_keys(KC_I, KC_S)) {
-        // stop application
+    // I S (stop application)
+    else if (leader_sequence_two_keys(KC_I, KC_S))
         tap_code16(LCTL(KC_F2));
-    } else if (leader_sequence_three_keys(KC_I, KC_D, KC_M)) {
-        // mute debug points 
+    // I D M  (mute debug points)
+    else if (leader_sequence_three_keys(KC_I, KC_D, KC_M))
         tap_code16(LCTL(LALT(LSFT(KC_F12))));
-    } else if (leader_sequence_three_keys(KC_C, KC_H, KC_S)) {
-        // hot swap - code
+    // C H S  (hot swap code)
+    else if (leader_sequence_three_keys(KC_C, KC_H, KC_S))
         tap_code16(LCTL(LSFT(KC_F9)));
-    } else if (leader_sequence_two_keys(KC_P, KC_I)) {
+    // P I
+    else if (leader_sequence_two_keys(KC_P, KC_I))
         SEND_STRING("qw@4134");
-    }  else if (leader_sequence_two_keys(KC_F, KC_I)) {
+    // F I
+    else if (leader_sequence_two_keys(KC_F, KC_I))
         SEND_STRING("qWa@413A");
-    }
 }
 
 
 #endif /* LEADER */
 
-
+// Lower + Raise gives Adjust layer
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
@@ -376,7 +388,6 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LCTL_T(KC_ESC):
         case LT(_KEYPAD, KC_TAB):
-        case TT(_RAISE):
         case LT(_LOWER, KC_BSPC):
         case LSFT_T(KC_ENT):
             return true;
@@ -436,7 +447,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   //   // set_timelog();
   // }
 
+    // Mod Tap intercepted. Modded tap behaviour limitation override.
+    //  ref: https://docusaurus.qmk.fm/mod_tap#intercepting-mod-taps
   switch (keycode) {
+    case LGUI_T(KC_EXLM):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_EXLM); 
+            return false;        
+        }
+        break;
+    case LALT_T(KC_AT):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_AT); 
+            return false;        
+        }
+        break;
+    case LSFT_T(KC_HASH):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_HASH); 
+            return false;        
+        }
+        break;
+    case CTL_T(KC_DLR):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_DLR); 
+            return false;        
+        }
+        break;
+    case MEH_T(KC_PERC):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_PERC); 
+            return false;        
+        }
+        break;
     // case FOO:
     //   if (record->event.pressed) {
     //     // Do something when pressed
@@ -450,7 +493,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //     PLAY_SONG(tone_qwerty);
     //   }
     //   return true; // Let QMK send the enter press/release events
-    default:
-      return true; // Process all other keycodes normally
   }
+  return true; // Process all other keycodes normally
 }
