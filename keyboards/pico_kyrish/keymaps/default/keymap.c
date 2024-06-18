@@ -36,6 +36,7 @@ enum layer_number {
 #define mo_lower        MO(_LOWER)
 #define mo_tg_lower     TT(_LOWER)
 #define mo_raise        MO(_RAISE)
+#define tg_raise        TG(_RAISE)
 #define mo_tg_raise     TT(_RAISE)
 #define ctrl_esc        LCTL_T(KC_ESC) 
 #define mo_nums         MO(_KEYPAD)
@@ -50,16 +51,17 @@ enum layer_number {
 // custom modifier combo
 #define spc_sft         SFT_T(KC_SPC)
 #define ent_sft         SFT_T(KC_ENT)
-#define l_flower        SFT_T(KC_LBRC)
-#define r_flower        SFT_T(KC_RBRC)
+
+// symbols alias
+#define l_flower        S(KC_LBRC)
+#define r_flower        S(KC_RBRC)
 
 // intellij IDE keybinds
-#define toggle_line_breakpoint  CTL_T(KC_F8)
+#define toggle_line_breakpoint  C(KC_F8)
 
 // debugging intellij keybinds
-#define d_evaluate_expr        SFT_T(LALT(KC_8))
-
-#define appn_debug             CTL_T(KC_F9)
+#define d_evaluate_expr        S(A(KC_8))
+#define appn_debug             C(KC_F9)
 
 // mpv keybinds
 // #define mo_nums_playlist LT(_KEYPAD, RSFT(KC_ENT))
@@ -107,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         kp_tab,     KC_Q,           KC_W,           KC_F,           KC_P,              KC_B,                                                             KC_J,            KC_L,            KC_U,           KC_Y,          KC_SCLN,        KC_QUOT,
         ctrl_esc,   GUI_T(KC_A),    ALT_T(KC_R),    SFT_T(KC_S),    CTL_T(KC_T),       MEH_T(KC_G),                                                      HYPR_T(KC_M),    CTL_T(KC_N),     SFT_T(KC_E),    ALT_T(KC_I),   GUI_T(KC_O),    KC_MINS,
         l_shft,     KC_Z,           KC_X,           KC_C,           KC_D,              KC_V,          QK_LEAD,    ctrl_esc,   KC_BSPC,   KC_DEL,         KC_K,            KC_H,            KC_COMM,        KC_DOT,        KC_SLSH,        KC_EQL,
-                                                                    ALT_T(KC_ENT),     KC_LGUI,       mo_lower,   KC_SPC,     ent_sft,   mo_tg_raise,    GUI_T(KC_ENT),   KC_BSLS
+                                                                    ALT_T(KC_ENT),     KC_LGUI,       mo_lower,   KC_SPC,     ent_sft,   mo_raise,       GUI_T(KC_ENT),   KC_BSLS
     ),
 
     // Lower (Symbols & function keys)
@@ -122,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE] = LAYOUT_ortho_4x12(
         KC_BTN1,     KC_MS_L,        KC_MS_D,        KC_MS_U,       KC_MS_R,        KC_BTN2,                                                      KC_PGUP,        KC_HOME,        KC_UP,          KC_END,         KC_MS_WH_UP,    KC_BTN1,
         _______,     KC_LGUI,        KC_LALT,        KC_LSFT,       KC_LCTL,        KC_FIND,                                                      KC_PGDN,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_MS_WH_DOWN,  KC_PSCR,
-        _______,     KC_UNDO,        KC_CUT,         KC_COPY,       XXXXXXX,        KC_PASTE,      _______,    _______,  _______,    _______,     XXXXXXX,        XXXXXXX,        XXXXXXX,        XXXXXXX,        XXXXXXX,        XXXXXXX,
+        _______,     KC_UNDO,        KC_CUT,         KC_COPY,       XXXXXXX,        KC_PASTE,      _______,    _______,  _______,    _______,     tg_raise,       XXXXXXX,        XXXXXXX,        XXXXXXX,        XXXXXXX,        XXXXXXX,
                                                                     _______,        _______,       _______,    _______,  _______,    _______,     _______,        _______
     ),
 
@@ -147,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         kp_tab,     KC_Q,           KC_MPRV,        KC_MPLY,        KC_MNXT,        KC_VOLU,                                                            esc,               KC_KP_7,           KC_KP_8,           KC_KP_9,           KC_BSPC,        XXXXXXX,
         _______,    XXXXXXX,        XXXXXXX,        mpv_toggle,     kp_toggle,      KC_VOLD,                                                            KC_Q,              KC_KP_4,           KC_KP_5,           KC_KP_6,           KC_PGUP,        XXXXXXX,
         reset_kb,   tgl_boot,       XXXXXXX,        XXXXXXX,        XXXXXXX,        KC_MUTE,       _______,    _______,  RCTL(KC_DEL),    KC_DEL,       KC_KP_0,           KC_KP_1,           KC_KP_2,           KC_KP_3,           KC_PGDN,        XXXXXXX,
-                                                                    LALT_T(KC_ENT), KC_LGUI,       lowers_bs,  KC_SPC,   spc_sft,         mo_raise,     RSFT(KC_ENT),      mo_nums
+                                                                    LALT_T(KC_ENT), KC_LGUI,       lowers_bs,  KC_SPC,   spc_sft,         mo_raise,     S(KC_ENT),         mo_nums
     )
 };
 
@@ -259,7 +261,18 @@ void leader_end_user(void) {
 
 // Lower + Raise gives Adjust layer
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+
+    gpio_set_pin_output(GP25);
+    switch (get_highest_layer(state)) {
+        case 0:
+            gpio_write_pin_low(GP25);
+            break;
+        default:
+            gpio_write_pin_high(GP25);
+            break;
+    }
+
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
 
@@ -391,6 +404,65 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //             }
 //             break;
 //         default:
+//             break;
+//     }
+// }
+
+
+
+// LED on GPIO 25 
+// layer_state_t layer_state_set_user(layer_state_t state) {
+
+//   return state;
+// }
+
+// bool led_update_kb(led_t led_state) {
+//     bool res = led_update_user(led_state);
+//     if(res) {
+//         // gpio_write_pin sets the pin high for 1 and low for 0.
+//         // In this example the pins are inverted, setting
+//         // it low/0 turns it on, and high/1 turns the LED off.
+//         // This behavior depends on whether the LED is between the pin
+//         // and VCC or the pin and GND.
+//         gpio_write_pin(B0, !led_state.num_lock);
+//     }
+//     return res;
+// }
+
+// // Runs constantly in the background, in a loop.
+// void matrix_scan_user(void) {
+
+//     uint8_t layer = biton32(layer_state);
+
+//     // INSERT CODE HERE: turn off all leds
+
+//     switch (layer) {
+//         case YOUR_LAYER_1:
+//             // INSERT CODE HERE: turn on leds that correspond to YOUR_LAYER_1
+//             break;
+//         case YOUR_LAYER_2:
+//             // INSERT CODE HERE: turn on leds that correspond to YOUR_LAYER_2
+//             break;
+//         // add case for each layer
+//     }
+// };
+
+
+// split kb rgb example
+// void housekeeping_task_user(void) {
+//     switch (get_highest_layer(layer_state | default_layer_state)) {
+//         case 0:
+//             // Default layer
+//             rgblight_setrgb_at(RGB_BLACK, 0);
+//             break;
+//         case 1:
+//             rgblight_setrgb_at(RGB_RED, 0);
+//             break;
+//         case 2:
+//             rgblight_setrgb_at(RGB_GREEN, 0);
+//             break;
+//         case 3:
+//             rgblight_setrgb_at(RGB_BLUE, 0);
 //             break;
 //     }
 // }

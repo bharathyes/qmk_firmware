@@ -2,9 +2,9 @@
 COMB(qwEsc,             KC_ESC,         KC_Q, KC_W)
 COMB(fpTab,             KC_TAB,         KC_F, KC_P)
 COMB(hcommaSpace,       KC_SPC,         KC_H, KC_COMMA)
-COMB(dotslashEnt,       KC_ENT,         KC_DOT, KC_SLASH)
-COMB(yscolonBspc,       KC_BSPC,        KC_Y, KC_SCLN)
+COMB(dotslashEnt,       KC_ENT,         KC_H, KC_COMMA, KC_DOT)
 COMB(luBspc,            KC_BSPC,        KC_L, KC_U)
+COMB(wordDelete,        C(KC_BSPC),     KC_L, KC_U , KC_Y)
 COMB(jlDel,             KC_DEL,         KC_J, KC_L)
 COMB(del,               KC_DEL,         KC_SCLN, KC_QUOT)
 
@@ -19,8 +19,8 @@ COMB(paste,             C(KC_V),        KC_D, KC_V)
 
 // Symbols
 
-COMB(dblQuote,          S(KC_QUOT),     KC_L, KC_U , KC_Y)
-COMB(semicolon,         S(KC_SCLN),     KC_U , KC_Y, KC_SCLN)
+COMB(dblQuote,          S(KC_QUOT),     KC_U , KC_Y, KC_SCLN)
+COMB(semicolon,         S(KC_SCLN),     KC_Y, KC_SCLN)
 
 
 // Helpers for Kubernetes
@@ -34,6 +34,8 @@ SUBS(knGetNodes,   "kubectl get nodes -o wide ", KC_K, KC_N)
 SUBS(kmLogs,       "kubectl logs ", KC_K, KC_M)
 SUBS(kConfig,      "kubectl logs ", KC_K, KC_COMM)
 
+
+// top 100 english words
 SUBS(txt_eaff0b,             "me ", KC_M, KC_E)
 SUBS(txt_c96f2b,             "as ", KC_A, KC_S)
 SUBS(txt_ff3afa,             "we ", KC_W, KC_I)
