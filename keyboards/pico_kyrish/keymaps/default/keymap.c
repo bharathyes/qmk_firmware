@@ -41,6 +41,7 @@ enum layer_number {
 #define ctrl_esc        LCTL_T(KC_ESC) 
 #define mo_nums         MO(_KEYPAD)
 #define kp_tab          LT(_KEYPAD, KC_TAB)
+#define kp_gui          LT(_KEYPAD, KC_LGUI)
 #define kp_toggle       TG(_KEYPAD)
 #define mpv_toggle      TG(_MPV)
 #define l_shft          OSM(MOD_LSFT)
@@ -108,8 +109,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_COLEMAK] = LAYOUT_ortho_4x12(
         kp_tab,     KC_Q,           KC_W,           KC_F,           KC_P,              KC_B,                                                             KC_J,            KC_L,            KC_U,           KC_Y,          KC_SCLN,        KC_QUOT,
         ctrl_esc,   GUI_T(KC_A),    ALT_T(KC_R),    SFT_T(KC_S),    CTL_T(KC_T),       MEH_T(KC_G),                                                      HYPR_T(KC_M),    CTL_T(KC_N),     SFT_T(KC_E),    ALT_T(KC_I),   GUI_T(KC_O),    KC_MINS,
-        l_shft,     KC_Z,           KC_X,           KC_C,           KC_D,              KC_V,          QK_LEAD,    ctrl_esc,   KC_BSPC,   KC_DEL,         KC_K,            KC_H,            KC_COMM,        KC_DOT,        KC_SLSH,        KC_EQL,
-                                                                    ALT_T(KC_ENT),     KC_LGUI,       mo_lower,   KC_SPC,     ent_sft,   mo_raise,       GUI_T(KC_ENT),   KC_BSLS
+        KC_LSFT,    KC_Z,           KC_X,           KC_C,           KC_D,              KC_V,          QK_LEAD,    ctrl_esc,   KC_BSPC,   KC_DEL,         KC_K,            KC_H,            KC_COMM,        KC_DOT,        KC_SLSH,        KC_EQL,
+                                                                    ALT_T(KC_ENT),     kp_gui,        mo_lower,   KC_SPC,     ent_sft,   mo_raise,       GUI_T(KC_ENT),   KC_BSLS
     ),
 
     // Lower (Symbols & function keys)
