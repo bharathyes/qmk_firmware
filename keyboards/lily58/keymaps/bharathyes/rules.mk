@@ -20,6 +20,9 @@ UNICODEMAP_ENABLE = no
 TRI_LAYER_ENABLE = yes      # lower + raise gives adjust layer ( tri-layer )
 DYNAMIC_MACRO_ENABLE = yes  # dynamic recorded macros (temp, resets on reboot)
 
+VPATH  +=  keyboards/gboards/
+COMBO_ENABLE=yes 			# https://docs.qmk.fm/features/combo#dictionary-management
+
 # If you want to change the display of OLED, you need to change here
 # SRC +=  ./lib/rgb_state_reader.c \
 #         ./lib/layer_state_reader.c \

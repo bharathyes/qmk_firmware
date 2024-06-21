@@ -40,6 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TOGGLE 2  			// TT layer shift momentary OR toggle ON/OFF if tapped thrice
 #define QUICK_TAP_TERM 0
 // #define TAPPING_TERM_PER_KEY
+#define PERMISSIVE_HOLD
 #define PERMISSIVE_HOLD_PER_KEY
 
 // #define HOLD_ON_OTHER_KEY_PRESS  
@@ -82,3 +83,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // #define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX
 // #define UNICODE_KEY_LNX
+
+#define COMBO_TERM 35
+#define COMBO_VARIABLE_LEN

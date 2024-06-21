@@ -1,11 +1,12 @@
 #include QMK_KEYBOARD_H
+#include "g/keymap_combo.h"
 
 enum layer_number {
   _COLEMAK = 0,
+  _KEYPAD,
   _LOWER,
   _RAISE,
   _ADJUST,
-  _KEYPAD,
 };
 
 
@@ -30,17 +31,33 @@ enum layer_number {
  */
 
 
-// custom defined key codes
+// layer aliases
+#define mo_lower        MO(_LOWER)
+#define mo_tg_lower     TT(_LOWER)
+#define mo_raise        MO(_RAISE)
 #define mo_tg_raise     TT(_RAISE)
-#define ctrl_esc        LCTL_T(KC_ESC)
-#define kp_tab          LT(_KEYPAD, KC_TAB)
-#define lowers_bs       LT(_LOWER, KC_BSPC)
 #define l_shft          OSM(MOD_LSFT)
+
+// custom layer combos
+#define kp_tab          LT(_KEYPAD, KC_TAB)
+#define kp_gui          LT(_KEYPAD, KC_LGUI)
+#define kp_toggle       TG(_KEYPAD)
+#define lowers_bs       LT(_LOWER, KC_BSPC)
 #define ent_sft         LSFT_T(KC_ENT)
 
+
+// custom keybinds
 #define esc             KC_ESC
-#define l_flower        LSFT(KC_LBRC)
-#define r_flower        LSFT(KC_RBRC)
+#define ctrl_esc        LCTL_T(KC_ESC)
+#define l_flower        S(KC_LBRC)
+#define r_flower        S(KC_RBRC)
+
+// intellij IDE keybinds
+#define toggle_line_breakpoint  C(KC_F8)
+
+// debugging intellij keybinds
+#define d_evaluate_expr        S(A(KC_8))
+#define appn_debug             C(KC_F9)
 
 // qmk keycodes
 #define tgl_boot        QK_BOOT     // put into bootloader mode for flashing
@@ -76,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ctrl_esc,     LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),  
                 HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O), KC_MINS,
   l_shft,       KC_Z,   KC_X,   KC_C,    KC_D,     KC_V,   QK_LEAD,    KC_DEL,     KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
-        LALT_T(KC_ENT), KC_LGUI,    lowers_bs,     KC_SPC,             ent_sft,     mo_tg_raise,     XXXXXXX,    XXXXXXX
+        LALT_T(KC_ENT), KC_LGUI,    mo_lower,     KC_SPC,             ent_sft,     mo_raise,     XXXXXXX,    KC_BSLS
 
 ),
 
@@ -192,11 +209,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
   [_KEYPAD] = LAYOUT(
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE,                   XXXXXXX, XXXXXXX, XXXXXXX, KC_PSLS, XXXXXXX, KC_BSPC,
-  XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                   XXXXXXX, KC_7,    KC_8,    KC_9,    KC_PAST, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLD,                   XXXXXXX, KC_4,    KC_5,    KC_6,    KC_PMNS, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_PPLS, XXXXXXX,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
+  XXXXXXX,  XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX,   KC_MUTE,                   XXXXXXX, XXXXXXX, XXXXXXX, KC_PSLS, XXXXXXX, KC_BSPC,
+  XXXXXXX,  XXXXXXX,   KC_MPRV, KC_MPLY, KC_MNXT,   KC_VOLU,                   XXXXXXX, KC_7,    KC_8,    KC_9,    KC_PAST, XXXXXXX,
+  XXXXXXX,  XXXXXXX,   XXXXXXX, XXXXXXX, kp_toggle, KC_VOLD,                   XXXXXXX, KC_4,    KC_5,    KC_6,    KC_PMNS, XXXXXXX,
+  reset_kb, tgl_boot,  XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_PPLS, XXXXXXX,
+                             _______, _______, lowers_bs, KC_SPC, ent_sft,  mo_raise, _______, _______
   )
 };
 
@@ -331,7 +348,18 @@ void leader_end_user(void) {
 
 // Lower + Raise gives Adjust layer
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+
+    gpio_set_pin_output(D5);
+    switch (get_highest_layer(state)) {
+        case 0:
+            gpio_write_pin_low(D5);
+            break;
+        default:
+            gpio_write_pin_high(D5);
+            break;
+    }
+
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
 //SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
