@@ -3,7 +3,9 @@
 
 enum layer_number {
   _COLEMAK = 0,
+  _QWERTY,
   _KEYPAD,
+  _IDEBUG,
   _LOWER,
   _RAISE,
   _ADJUST,
@@ -12,12 +14,12 @@ enum layer_number {
 
 /*
  * TODO: explore on QMK level "VIM Motions
- *  eg., 20Down should auto emit down 20 times, etc. 
- */  
+ *  eg., 20Down should auto emit down 20 times, etc.
+ */
 
 
-/* LAYER SWITCHING 
- *  
+/* LAYER SWITCHING
+ *
  * DF(layer)       Set the base (default) layer
  * MO(layer)       Momentarily turn on layer when pressed (requires KC_TRNS on destination layer)
  * OSL(layer)      Momentarily activates layer until a key is pressed. See One Shot Keys for details.
@@ -26,7 +28,7 @@ enum layer_number {
  * TG(layer)       Toggle layer on or off
  * TO(layer)       Turns on layer and turns off all other layers, except the default layer
  * TT(layer)       Normally acts like MO unless it's tapped multiple times, which toggles layer on
- * 
+ *
  * ref: https://docusaurus.qmk.fm/feature_layers#switching-and-toggling-layers
  */
 
@@ -34,9 +36,13 @@ enum layer_number {
 // layer aliases
 #define mo_lower        MO(_LOWER)
 #define mo_tg_lower     TT(_LOWER)
+#define tg_lower        TG(_LOWER)
 #define mo_raise        MO(_RAISE)
+#define tg_raise        TG(_RAISE)
 #define mo_tg_raise     TT(_RAISE)
 #define l_shft          OSM(MOD_LSFT)
+#define colemak_base    DF(_COLEMAK)
+#define qwerty_base     DF(_QWERTY)
 
 // custom layer combos
 #define kp_tab          LT(_KEYPAD, KC_TAB)
@@ -54,10 +60,12 @@ enum layer_number {
 
 // intellij IDE keybinds
 #define toggle_line_breakpoint  C(KC_F8)
+#define toggle_tmp_breakpoint   C(S(A(KC_F8)))
 
 // debugging intellij keybinds
 #define d_evaluate_expr        S(A(KC_8))
 #define appn_debug             C(KC_F9)
+
 
 // qmk keycodes
 #define tgl_boot        QK_BOOT     // put into bootloader mode for flashing
@@ -90,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_COLEMAK] = LAYOUT(
   esc,          KC_1,   KC_2,   KC_3,    KC_4,     KC_5,                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
   kp_tab,       KC_Q,   KC_W,   KC_F,    KC_P,     KC_B,                           KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_QUOT,
-  ctrl_esc,     LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),  
+  ctrl_esc,     LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),
                 HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O), KC_MINS,
   l_shft,       KC_Z,   KC_X,   KC_C,    KC_D,     KC_V,   QK_LEAD,    KC_DEL,     KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
         LALT_T(KC_ENT), KC_LGUI,    mo_lower,     KC_SPC,             ent_sft,     mo_raise,     XXXXXXX,    KC_BSLS
@@ -100,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+ * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  | BSP  |
  * |-----------------------------------------|                    |-----------------------------------------|
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
  * |-----------------------------------------|                    |-----------------------------------------|
@@ -108,23 +116,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-----------------------------------------|   [   |    |    ]  |-----------------------------------------|
  * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |  `   | RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
 
-/* [_QWERTY] = LAYOUT(
-  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
-  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-  KC_LCTL,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                        KC_LALT, KC_LGUI, MO(_LOWER), KC_SPC, KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI
-),*/
+ [_QWERTY] = LAYOUT(
+  esc,      KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_BSPC,
+  kp_tab,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_MINS,
+  ctrl_esc, LGUI_T(KC_A),   LALT_T(KC_S),   LSFT_T(KC_D),   LCTL_T(KC_F),   MEH_T(KC_G),
+                HYPR_T(KC_H),   LCTL_T(KC_J),   LSFT_T(KC_K),   LALT_T(KC_L),   LGUI_T(KC_N),  KC_QUOT,
+//   ctrl_esc, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
+  l_shft,   KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+                        KC_LALT, KC_LGUI,  mo_lower, KC_SPC, KC_ENT, mo_raise, KC_GRV, KC_RGUI
+),
 
 
  /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * | RST  | BOOT |      |PAUSE |      | DEL  |                    |   \  | F10  | F11  | F12  |   (  |  BSP |  
+ * | RST  | BOOT |      |PAUSE |      | DEL  |                    |   \  | F10  | F11  | F12  |   (  |  BSP |
  * |-----------------------------------------|                    |-----------------------------------------|
  * |   ^  |   &  |   *  |   (  |   )  |  BS  |                    |   [  |  F7  |  F8  |  F9  |   )  |      |
  * |-----------------------------------------|                    |-----------------------------------------|
@@ -163,10 +173,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_RAISE] = LAYOUT(
-  DM_REC1, DM_REC2, XXXXXXX, KC_MS_U, XXXXXXX, DM_RSTP,                     XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,        XXXXXXX,
-  XXXXXXX, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,                     KC_PGUP, KC_HOME, KC_UP,    KC_END,     KC_MS_WH_UP,    KC_BTN1,
-  DM_PLY1, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_FIND,                     KC_PGDN, KC_LEFT, KC_DOWN,  KC_RIGHT,   KC_MS_WH_DOWN,  KC_PSCR,
-  DM_PLY2, KC_UNDO, KC_CUT,  KC_COPY, XXXXXXX, KC_PASTE, _______, _______,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,        XXXXXXX,
+  _______, _______, KC_MS_WH_UP, KC_MS_U,  KC_MS_WH_DOWN, _______,                     XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,        KC_PSCR,
+  _______, KC_BTN1, KC_MS_L,     KC_MS_D,  KC_MS_R,       KC_BTN2,                     KC_PGUP, KC_HOME, KC_UP,    KC_END,     KC_MS_WH_UP,    KC_BTN1,
+  _______, KC_LGUI, KC_LALT,     KC_LSFT,  KC_LCTL,       KC_FIND,                     KC_PGDN, KC_LEFT, KC_DOWN,  KC_RIGHT,   KC_MS_WH_DOWN,  tg_raise,
+  _______, KC_UNDO, KC_CUT,      KC_COPY,  XXXXXXX,       KC_PASTE, _______, _______,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,        XXXXXXX,
                              _______, _______, _______,  _______, _______,  _______, _______, _______
 ),
 
@@ -187,10 +197,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
   [_ADJUST] = LAYOUT(
-  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,  XXXXXXX,     XXXXXXX,   XXXXXXX,      XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,  qwerty_base, XXXXXXX,   XXXXXXX,      XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,  XXXXXXX,     tg_lower,  tg_raise,     kp_toggle, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,  XXXXXXX,     XXXXXXX,   colemak_base, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                              _______, _______, _______, _______, _______,  _______, _______, _______
   ),
   /* KEYPAD
@@ -214,38 +224,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,  XXXXXXX,   XXXXXXX, XXXXXXX, kp_toggle, KC_VOLD,                   XXXXXXX, KC_4,    KC_5,    KC_6,    KC_PMNS, XXXXXXX,
   reset_kb, tgl_boot,  XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, KC_0,    KC_1,    KC_2,    KC_3,    KC_PPLS, XXXXXXX,
                              _______, _______, lowers_bs, KC_SPC, ent_sft,  mo_raise, _______, _______
-  )
+  ),
+
+  /*
+  *                                                                                 view_breakpoints  toggle_breakpoints
+  *                                                                                 step_into step_next step_out step_
+  *      debug_options [A(S(F9))]  run/debug_options debug_selected[S(F9)]                            execution_point  run_to_cursor   skip_breakpoints
+  *
+  *
+  */
+
+  [_IDEBUG] = LAYOUT(
+  XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,    XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,    XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,    XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,    XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                             _______, _______, _______, _______, _______,  _______, _______, _______
+  ),
 };
 
 
 
 /*
 
-TODO:
-Features to explore
+# TODO:
+## Features to explore
 
-
-// for thumb cluster
-MT(MOD_LSFT, KC_BSPC) for backspace on tap and shift on hold;
-LT(_FUN, KC_ENT) for enter on tap and switching to the _FUN layer on hold;
-LT(_SYB, KC_SPC) for space on tap and switching to the _SYB layer on hold.
-
-
-// TAP DANCE GUIDE
+### TAP DANCE GUIDE
 https://docs.qmk.fm/#/feature_tap_dance
 https://thomasbaart.nl/2018/12/13/qmk-basics-tap-dance/
 
-
-// RESET and BOOTLOADER
-https://docs.qmk.fm/#/ref_functions?id=resetting-the-keyboard
-
-
-// LEADER key
-https://docs.qmk.fm/#/feature_leader_key
-#define ENABLE_COMPILE_KEYCODE
-
-
-// AUDIO
+### AUDIO
 https://docs.qmk.fm/#/feature_audio
 
 */
@@ -267,7 +276,7 @@ const uint32_t PROGMEM unicode_map[] = {
     [BANG]  = 0x203D,  // ‽
     [IRONY] = 0x2E2E,  // ⸮
     [SNEK]  = 0x1F40D, // 🐍
-    [THUMBUP]   =   0x1F44D, // 
+    [THUMBUP]   =   0x1F44D, //
 };
 
 #endif
@@ -286,17 +295,17 @@ void leader_start_user(void) {
 void leader_end_user(void) {
     // ESC
     if (leader_sequence_one_key(KC_ESC))
-        tap_code16(KC_PAUSE);  
+        tap_code16(KC_PAUSE);
     // O K
     else if (leader_sequence_two_keys(KC_O, KC_K))
-        SEND_STRING("Okay."); 
+        SEND_STRING("Okay.");
     // P U
     else if (leader_sequence_two_keys(KC_P, KC_U))
         SEND_STRING("bharathyes");
     // P G
     else if (leader_sequence_two_keys(KC_P, KC_G))
         SEND_STRING("bharathyes.in@gmail.com");
-    // P 
+    // P
     else if (leader_sequence_two_keys(KC_P, KC_O))
         SEND_STRING("bharathyes@outlook.com");
     // W E
@@ -448,11 +457,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 /*
  * CUSTOM MACROS method
  * ---------------------
- * 1. Interrupt or extend key events. 
+ * 1. Interrupt or extend key events.
  * 2. Add custom key codes.
  *  REF : https://docs.qmk.fm/#/custom_quantum_functions?id=example-process_record_user-implementation
- * 
- *  ALSO : dynamic macros recording without reset key. 
+ *
+ *  ALSO : dynamic macros recording without reset key.
  *   Press the corresponding macro key to stop recording
  *  ref: https://docusaurus.qmk.fm/feature_dynamic_macros#dynamic_macro_user_call
  */
@@ -460,14 +469,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 // SAFE_RANGE assigns a unique number everytime
 /* enum my_keycodes {
-  FOO = SAFE_RANGE, 
+  FOO = SAFE_RANGE,
   BAR
 };
  */
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    
+
     // stop dynamic macro recording without reset key.
     // WIP : keymap.c:424:10: error: implicit declaration of function 'process_record_dynamic_macro'; did you mean 'process_dynamic_macro'?
     // uint16_t macro_kc = (keycode == lowers_bs ? DM_RSTP : keycode);
@@ -488,32 +497,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case LGUI_T(KC_EXLM):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_EXLM); 
-            return false;        
+            tap_code16(KC_EXLM);
+            return false;
         }
         break;
     case LALT_T(KC_AT):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_AT); 
-            return false;        
+            tap_code16(KC_AT);
+            return false;
         }
         break;
     case LSFT_T(KC_HASH):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_HASH); 
-            return false;        
+            tap_code16(KC_HASH);
+            return false;
         }
         break;
     case CTL_T(KC_DLR):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_DLR); 
-            return false;        
+            tap_code16(KC_DLR);
+            return false;
         }
         break;
     case MEH_T(KC_PERC):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_PERC); 
-            return false;        
+            tap_code16(KC_PERC);
+            return false;
         }
         break;
     // case FOO:

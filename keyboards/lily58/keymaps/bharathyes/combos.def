@@ -35,6 +35,10 @@ SUBS(kmLogs,       "kubectl logs ", KC_K, KC_M)
 SUBS(kConfig,      "kubectl logs ", KC_K, KC_COMM)
 
 
+
+// my frequently used words
+SUBS(afk_lunch,             "Away from keyboard for lunch ", KC_F, KC_K)
+
 // top 100 english words
 SUBS(txt_eaff0b,             "me ", KC_M, KC_E)
 SUBS(txt_c96f2b,             "as ", KC_A, KC_S)

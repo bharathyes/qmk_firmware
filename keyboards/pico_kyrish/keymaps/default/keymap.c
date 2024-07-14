@@ -6,7 +6,7 @@
 
 
 enum layer_number {
-  _COLEMAK = 0,
+  _COLEMAK = 0,555
   _MPV,
   _KEYPAD,
   _LOWER,
@@ -40,13 +40,13 @@ enum layer_number {
 #define mo_tg_raise     TT(_RAISE)
 #define ctrl_esc        LCTL_T(KC_ESC) 
 #define mo_nums         MO(_KEYPAD)
-#define kp_tab          LT(_KEYPAD, KC_TAB)
-#define kp_gui          LT(_KEYPAD, KC_LGUI)
 #define kp_toggle       TG(_KEYPAD)
 #define mpv_toggle      TG(_MPV)
 #define l_shft          OSM(MOD_LSFT)
 
 // custom layer combo
+#define kp_tab          LT(_KEYPAD, KC_TAB)
+#define kp_gui          LT(_KEYPAD, KC_LGUI)
 #define lowers_bs       LT(_LOWER, KC_BSPC)
 
 // custom modifier combo
