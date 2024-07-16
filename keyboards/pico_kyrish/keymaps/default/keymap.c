@@ -6,7 +6,7 @@
 
 
 enum layer_number {
-  _COLEMAK = 0,555
+  _COLEMAK = 0,
   _MPV,
   _KEYPAD,
   _LOWER,
@@ -15,8 +15,8 @@ enum layer_number {
 };
 
 
-/* LAYER SWITCHING 
- *  
+/* LAYER SWITCHING
+ *
  * DF(layer)       Set the base (default) layer
  * MO(layer)       Momentarily turn on layer when pressed (requires KC_TRNS on destination layer)
  * OSL(layer)      Momentarily activates layer until a key is pressed. See One Shot Keys for details.
@@ -25,7 +25,7 @@ enum layer_number {
  * TG(layer)       Toggle layer on or off
  * TO(layer)       Turns on layer and turns off all other layers, except the default layer
  * TT(layer)       Normally acts like MO unless it's tapped multiple times, which toggles layer on
- * 
+ *
  * ref: https://docusaurus.qmk.fm/feature_layers#switching-and-toggling-layers
  */
 
@@ -38,7 +38,7 @@ enum layer_number {
 #define mo_raise        MO(_RAISE)
 #define tg_raise        TG(_RAISE)
 #define mo_tg_raise     TT(_RAISE)
-#define ctrl_esc        LCTL_T(KC_ESC) 
+#define ctrl_esc        LCTL_T(KC_ESC)
 #define mo_nums         MO(_KEYPAD)
 #define kp_toggle       TG(_KEYPAD)
 #define mpv_toggle      TG(_MPV)
@@ -46,7 +46,7 @@ enum layer_number {
 
 // custom layer combo
 #define kp_tab          LT(_KEYPAD, KC_TAB)
-#define kp_gui          LT(_KEYPAD, KC_LGUI)
+#define kp_bsls          LT(_KEYPAD, KC_BSLS)
 #define lowers_bs       LT(_LOWER, KC_BSPC)
 
 // custom modifier combo
@@ -110,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         kp_tab,     KC_Q,           KC_W,           KC_F,           KC_P,              KC_B,                                                             KC_J,            KC_L,            KC_U,           KC_Y,          KC_SCLN,        KC_QUOT,
         ctrl_esc,   GUI_T(KC_A),    ALT_T(KC_R),    SFT_T(KC_S),    CTL_T(KC_T),       MEH_T(KC_G),                                                      HYPR_T(KC_M),    CTL_T(KC_N),     SFT_T(KC_E),    ALT_T(KC_I),   GUI_T(KC_O),    KC_MINS,
         KC_LSFT,    KC_Z,           KC_X,           KC_C,           KC_D,              KC_V,          QK_LEAD,    ctrl_esc,   KC_BSPC,   KC_DEL,         KC_K,            KC_H,            KC_COMM,        KC_DOT,        KC_SLSH,        KC_EQL,
-                                                                    ALT_T(KC_ENT),     kp_gui,        mo_lower,   KC_SPC,     ent_sft,   mo_raise,       GUI_T(KC_ENT),   KC_BSLS
+                                                                    ALT_T(KC_ENT),     KC_LGUI,       mo_lower,   KC_SPC,     ent_sft,   mo_raise,       GUI_T(KC_ENT),   kp_bsls
     ),
 
     // Lower (Symbols & function keys)
@@ -129,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                     _______,        _______,       _______,    _______,  _______,    _______,     _______,        _______
     ),
 
-    // Adjust 
+    // Adjust
     [_ADJUST] = LAYOUT_ortho_4x12(
         _______,     XXXXXXX,        XXXXXXX,        XXXXXXX,       XXXXXXX,        XXXXXXX,                                                      XXXXXXX,        KC_F10,         KC_F11,            KC_F12,         XXXXXXX,        XXXXXXX,
         _______,     XXXXXXX,        XXXXXXX,        XXXXXXX,       XXXXXXX,        XXXXXXX,                                                      XXXXXXX,        XXXXXXX,        d_evaluate_expr,   XXXXXXX,        XXXXXXX,        XXXXXXX,
@@ -137,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                     _______,        _______,     _______,    _______,  _______,    _______,       _______,        _______
     ),
 
-    // keypad with media control 
+    // keypad with media control
     [_KEYPAD] = LAYOUT_ortho_4x12(
         _______,    XXXXXXX,        KC_MPRV,        KC_MPLY,        KC_MNXT,        KC_VOLU,                                                      XXXXXXX,        KC_7,           KC_8,           KC_9,           KC_PAST,        KC_PSLS,
         _______,    XXXXXXX,        XXXXXXX,        mpv_toggle,     kp_toggle,      KC_VOLD,                                                      XXXXXXX,        KC_4,           KC_5,           KC_6,           KC_PPLS,        KC_PMNS,
@@ -171,9 +171,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // const uint16_t PROGMEM paste_combo[]    =   {KC_D, KC_V, COMBO_END};
 // combo_t key_combos[] = {
 //     COMBO(bksp_combo,   KC_BSPC),
-//     COMBO(cut_combo,    C(KC_X)), 
-//     COMBO(copy_combo,   C(KC_C)), 
-//     COMBO(paste_combo,  C(KC_V)), 
+//     COMBO(cut_combo,    C(KC_X)),
+//     COMBO(copy_combo,   C(KC_C)),
+//     COMBO(paste_combo,  C(KC_V)),
 // };
 
 
@@ -199,17 +199,17 @@ void leader_start_user(void) {
 void leader_end_user(void) {
     // ESC
     if (leader_sequence_one_key(KC_ESC))
-        tap_code16(KC_PAUSE);  
+        tap_code16(KC_PAUSE);
     // O K
     else if (leader_sequence_two_keys(KC_O, KC_K))
-        SEND_STRING("Okay."); 
+        SEND_STRING("Okay.");
     // P U
     else if (leader_sequence_two_keys(KC_P, KC_U))
         SEND_STRING("bharathyes");
     // P G
     else if (leader_sequence_two_keys(KC_P, KC_G))
         SEND_STRING("bharathyes.in@gmail.com");
-    // P 
+    // P
     else if (leader_sequence_two_keys(KC_P, KC_O))
         SEND_STRING("bharathyes@outlook.com");
     // W E
@@ -308,7 +308,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    
+
     // stop dynamic macro recording without reset key.
     // WIP : keymap.c:424:10: error: implicit declaration of function 'process_record_dynamic_macro'; did you mean 'process_dynamic_macro'?
     // uint16_t macro_kc = (keycode == lowers_bs ? DM_RSTP : keycode);
@@ -329,32 +329,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case LGUI_T(KC_EXLM):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_EXLM); 
-            return false;        
+            tap_code16(KC_EXLM);
+            return false;
         }
         break;
     case LALT_T(KC_AT):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_AT); 
-            return false;        
+            tap_code16(KC_AT);
+            return false;
         }
         break;
     case LSFT_T(KC_HASH):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_HASH); 
-            return false;        
+            tap_code16(KC_HASH);
+            return false;
         }
         break;
     case CTL_T(KC_DLR):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_DLR); 
-            return false;        
+            tap_code16(KC_DLR);
+            return false;
         }
         break;
     case MEH_T(KC_PERC):
         if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_PERC); 
-            return false;        
+            tap_code16(KC_PERC);
+            return false;
         }
         break;
     // case FOO:
@@ -411,7 +411,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
 
-// LED on GPIO 25 
+// LED on GPIO 25
 // layer_state_t layer_state_set_user(layer_state_t state) {
 
 //   return state;
