@@ -11,16 +11,22 @@ COMB(del,               KC_DEL,         KC_SCLN, KC_QUOT)
 // frequent combos
 
 COMB(undo,              C(KC_Z),        KC_Z, KC_X)
-COMB(redo,              C(S(KC_Z)),     KC_Z, KC_X, KC_C)
 COMB(cut,               C(KC_X),        KC_X, KC_C)
+COMB(redo,              C(S(KC_Z)),     KC_Z, KC_X, KC_C)
 COMB(copy,              C(KC_C),        KC_C, KC_D)
 COMB(paste,             C(KC_V),        KC_D, KC_V)
 
 
-// Symbols
+// Symbol
 
-COMB(dblQuote,          S(KC_QUOT),     KC_U , KC_Y, KC_SCLN)
+COMB(graVe,             KC_GRV,         KC_COMM , KC_DOT)
+COMB(equalsTo,          KC_EQL,         KC_DOT , KC_SLSH)
+COMB(powerOf,           KC_CIRC,        KC_COMM, KC_DOT , KC_SLSH)
+COMB(tilde,             KC_TILD,        KC_W , KC_F)
+COMB(pipeLinux,         KC_PIPE,        KC_B , KC_P)
+COMB(dblQuote,          S(KC_QUOT),     KC_U , KC_Y)
 COMB(semicolon,         S(KC_SCLN),     KC_Y, KC_SCLN)
+COMB(singleQuote,       KC_QUOT,        KC_U , KC_Y,KC_SCLN)
 
 
 // my frequently used words
