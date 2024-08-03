@@ -1,7 +1,7 @@
 {
-  "manufacturer": "Bharath",
+  "manufacturer": "bharathyes",
   "keyboard_name": "hiiragi",
-  "maintainer": "Bharath",
+  "maintainer": "bharathyes",
   "bootloader": "rp2040",
   "diode_direction": "COL2ROW",
   "features": {
@@ -14,18 +14,18 @@
   },
   "matrix_pins": {
     "cols": [
-      "GP0",
-      "GP1",
-      "GP2",
+      "GP29",
+      "GP28",
+      "GP27",
+      "GP26",
+      "GP15",
       "GP3",
       "GP4",
-      "GP14",
-      "GP15",
-      "GP26",
-      "GP27",
-      "GP28"
+      "GP5",
+      "GP6",
+      "GP7"
     ],
-    "rows": ["GP5", "GP6", "GP7", "GP8"]
+    "rows": ["GP10", "GP12", "GP13", "GP14"]
   },
   "processor": "RP2040",
   "url": "",

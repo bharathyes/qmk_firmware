@@ -1,0 +1,27 @@
+// regular used keys
+COMB(qwEsc,             KC_ESC,         KC_Q, KC_W)
+COMB(fpTab,             KC_TAB,         KC_F, KC_P)
+COMB(hcommaSpace,       KC_SPC,         KC_H, KC_COMMA)
+COMB(dotslashEnt,       KC_ENT,         KC_H, KC_COMMA, KC_DOT)
+COMB(luBspc,            KC_BSPC,        KC_L, KC_U)
+COMB(wordDelete,        C(KC_BSPC),     KC_L, KC_U , KC_Y)
+COMB(jlDel,             KC_DEL,         KC_J, KC_L)
+COMB(del,               KC_DEL,         KC_SCLN, KC_QUOT)
+
+// frequent combos
+
+COMB(undo,              C(KC_Z),        KC_Z, KC_X)
+COMB(redo,              C(S(KC_Z)),     KC_Z, KC_X, KC_C)
+COMB(cut,               C(KC_X),        KC_X, KC_C)
+COMB(copy,              C(KC_C),        KC_C, KC_D)
+COMB(paste,             C(KC_V),        KC_D, KC_V)
+
+
+// Symbols
+
+COMB(dblQuote,          S(KC_QUOT),     KC_U , KC_Y, KC_SCLN)
+COMB(semicolon,         S(KC_SCLN),     KC_Y, KC_SCLN)
+
+
+// my frequently used words
+SUBS(afk_lunch,             "Away from keyboard for lunch ", KC_F, KC_K)
