@@ -7,6 +7,7 @@
 
 enum layer_number {
   _COLEMAK = 0,
+  _QWERTY,
   _KEYPAD,
   _LOWER,
   _RAISE,
@@ -23,6 +24,8 @@ enum layer_number {
 #define mo_tg_raise     TT(_RAISE)
 #define l_shft          OSM(MOD_LSFT)
 #define colemak_base    DF(_COLEMAK)
+#define qwerty_base     DF(_QWERTY)
+
 
 // custom layer combos
 #define kp_tab          LT(_KEYPAD, KC_TAB)
@@ -33,6 +36,9 @@ enum layer_number {
 
 // custom keybinds
 #define esc             KC_ESC
+#define pipe            S(KC_BSLS)
+#define tilde           S(KC_GRV)
+#define underscore      S(KC_MINUS)
 #define ctrl_esc        LCTL_T(KC_ESC)
 #define l_flower        S(KC_LBRC)
 #define r_flower        S(KC_RBRC)
@@ -52,8 +58,9 @@ enum layer_number {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
+
     // ---------- COLEMAK --------------------------- //
-    
+
     [_COLEMAK] = LAYOUT_ortho_4x10(
         KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,                       KC_J,           KC_L,           KC_U,           KC_Y,           KC_SCLN,
         LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),                HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O),
@@ -62,41 +69,53 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 
-    // ---------- LOWER --------------------------- //
+    // ---------- QWERTY --------------------------- //
 
-    [_LOWER] = LAYOUT_ortho_4x10(
-        KC_AMPR,    KC_ASTR,    KC_LPRN,    KC_RPRN,    KC_BSPC,                    KC_LBRC,    KC_F7,      KC_F8,      KC_F9,      KC_RPRN,
-        LGUI_T(KC_EXLM),    LALT_T(KC_AT),  LSFT_T(KC_HASH),    CTL_T(KC_DLR),  MEH_T(KC_PERC),
-                                                                                    KC_GRV,     KC_F4,      KC_F5,      KC_F6,      l_flower,
-        KC_MS_L,    KC_MS_D,    KC_MS_U,    KC_MS_R,    KC_BTN2,                    KC_SLSH,    KC_F1,      KC_F2,      KC_F3,      r_flower,
-                                _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+    [_QWERTY] = LAYOUT_ortho_4x10(
+        KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,
+        LGUI_T(KC_A),   LALT_T(KC_S),   LSFT_T(KC_D),   LCTL_T(KC_F),   MEH_T(KC_G),                    HYPR_T(KC_H),   LCTL_T(KC_J),   LSFT_T(KC_K),   LALT_T(KC_L),   LGUI_T(KC_N),
+        KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                           KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,
+        XXXXXXX,        esc,            mo_lower,       KC_SPC,         kp_tab,                         QK_LEAD,        ent_sft,        mo_raise,       KC_BSPC,        XXXXXXX
     ),
 
 
-    // ---------- RAISE --------------------------- //
+    // ---------- SYMBOLS & Function keys --------------------------- //
+
+    [_LOWER] = LAYOUT_ortho_4x10(
+        KC_AMPR,            KC_ASTR,            KC_LPRN,            KC_RPRN,            KC_BSPC,                    KC_LBRC,    KC_F7,          KC_F8,              KC_F9,      pipe,
+        LGUI_T(KC_EXLM),    LALT_T(KC_AT),      LSFT_T(KC_HASH),    CTL_T(KC_DLR),      MEH_T(KC_PERC),             KC_RBRC,    CTL_T(KC_F4),   LSFT_T(KC_F5),      KC_F6,      l_flower,
+        KC_MINUS,           underscore,         KC_EQL,             KC_BSLS,            pipe,                       KC_SLSH,    KC_F1,          KC_F2,              KC_F3,      r_flower,
+        XXXXXXX,            _______,            _______,            _______,            _______,                    _______,    _______,        _______,            _______,    XXXXXXX
+    ),
+
+
+    // ---------- Navigations and Mouse keys --------------------------- //
 
     [_RAISE] = LAYOUT_ortho_4x10(
         KC_MS_L,     KC_MS_D,     KC_MS_U,      KC_MS_R,       KC_BTN1,                     KC_PGUP,       KC_HOME,       KC_UP,         KC_END,        KC_MS_WH_UP,
         KC_LGUI,     KC_LALT,     KC_LSFT,      KC_LCTL,       KC_FIND,                     KC_PGDN,       KC_LEFT,       KC_DOWN,       KC_RIGHT,      KC_MS_WH_DOWN,
         KC_UNDO,     KC_CUT,      KC_COPY,      XXXXXXX,       KC_PASTE,                    XXXXXXX,       KC_BTN1,       XXXXXXX,       KC_BTN2,       XXXXXXX,
-        _______, _______, _______, _______, _______,  _______, _______,  _______, _______, _______
+        XXXXXXX, _______, _______, _______, _______,  _______, _______,  _______, _______, XXXXXXX
     ),
+
+
+    // ---------- Keyboard adjustments --------------------------- //
 
     [_ADJUST] = LAYOUT_ortho_4x10(
-        XXXXXXX,     XXXXXXX,   XXXXXXX,      XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX,     tg_lower,  tg_raise,     kp_toggle, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX,     XXXXXXX,   colemak_base, XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+        XXXXXXX,     XXXXXXX,       XXXXXXX,      XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX,     tg_lower,      tg_raise,     kp_toggle, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX,     qwerty_base,   colemak_base, XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, _______, _______, _______, _______, _______, _______,  _______, _______, XXXXXXX
     ),
 
 
-    // ---------- KEYPAD --------------------------- //
+    // ---------- Num / KEYPAD  & Media controls --------------------------- //
 
     [_KEYPAD] = LAYOUT_ortho_4x10(
-        KC_MUTE,     KC_MPRV,    KC_MPLY,    KC_MNXT,     KC_VOLU,                   KC_PSLS,       KC_7,       KC_8,       KC_9,       KC_PAST,
-        reset_kb,    XXXXXXX,    XXXXXXX,    kp_toggle,   KC_VOLD,                   XXXXXXX,       KC_4,       KC_5,       KC_6,       KC_PMNS,
-        tgl_boot,    XXXXXXX,    XXXXXXX,    XXXXXXX,     XXXXXXX,                   KC_0,          KC_1,       KC_2,       KC_3,       KC_PPLS,
-        _______, _______, _______, lowers_bs, KC_SPC, ent_sft,  mo_raise, _______, _______, _______
+        KC_MUTE,     KC_MPRV,       KC_MPLY,    KC_MNXT,    KC_VOLU,                   KC_PSLS,     KC_7,       KC_8,       KC_9,       KC_PAST,
+        KC_LGUI,     KC_LALT,       KC_LSFT,    KC_LCTL,    KC_VOLD,                   XXXXXXX,     KC_4,       KC_5,       KC_6,       KC_PMNS,
+        tgl_boot,    reset_kb,      XXXXXXX,    XXXXXXX,    XXXXXXX,                   KC_0,        KC_1,       KC_2,       KC_3,       KC_PPLS,
+        XXXXXXX,    _______,        lowers_bs,  KC_SPC,     _______,                   _______,     ent_sft,     mo_raise,    _______,    XXXXXXX
     ),
 };
 
@@ -342,10 +361,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 //     // bottom most takes precedence
 //     my_capslock_layer,
-//     my_layer1_layer, 
-//     my_layer2_layer, 
+//     my_layer1_layer,
+//     my_layer2_layer,
 //     my_layer3_layer,
-//     my_layer4_layer, 
+//     my_layer4_layer,
 //     my_layer5_layer
 // );
 

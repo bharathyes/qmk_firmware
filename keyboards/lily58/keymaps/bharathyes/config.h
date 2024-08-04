@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 
-// ways to set the master side 
+// ways to set the master side
 #define MASTER_LEFT
 // #define MASTER_RIGHT
 // https://docusaurus.qmk.fm/feature_split_keyboard#handedness-by-eeprom
@@ -43,12 +43,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PERMISSIVE_HOLD
 #define PERMISSIVE_HOLD_PER_KEY
 
-// #define HOLD_ON_OTHER_KEY_PRESS  
+// #define HOLD_ON_OTHER_KEY_PRESS
 //  conflicts with permissive hold
 
-// exploring 
+// exploring
 // #define IGNORE_MOD_TAP_INTERRUPT
-// #define PERMISSIVE_HOLD 
+// #define PERMISSIVE_HOLD
 
 
 #define ONESHOT_TAP_TOGGLE 2 	/* tapping said times holds key until tapped once again */
@@ -63,9 +63,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_AUTO_SHIFT_SPECIAL
 #define RETRO_SHIFT	500		// to enable auto shift for tap mod keys too
 
-// CAPS WORD 
+// CAPS WORD
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
-#define CAPS_WORD_IDLE_TIMEOUT 4000 
+#define CAPS_WORD_IDLE_TIMEOUT 4000
 #define CAPS_WORD_INVERT_ON_SHIFT		// continue on shift key
 
 
@@ -76,7 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Dynamic Macro Recording
 #define DYNAMIC_MACRO_USER_CALL		// stop recording without reset key
-#define DYNAMIC_MACRO_NO_NESTING    // prevents recording recursive macros 
+#define DYNAMIC_MACRO_NO_NESTING    // prevents recording recursive macros
 									//  PS: macro 1 in macro2 and vice versa is still possible
 
 
@@ -86,3 +86,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define COMBO_TERM 35
 #define COMBO_VARIABLE_LEN
+#define COMBO_ONLY_FROM_LAYER 0
