@@ -102,10 +102,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ---------- Keyboard adjustments --------------------------- //
 
     [_ADJUST] = LAYOUT_ortho_4x10(
-        XXXXXXX,     XXXXXXX,       XXXXXXX,      XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX,     tg_lower,      tg_raise,     kp_toggle, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX,     qwerty_base,   colemak_base, XXXXXXX,   XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, _______, _______, _______, _______, _______, _______,  _______, _______, XXXXXXX
+        XXXXXXX,    XXXXXXX,        XXXXXXX,        XXXXXXX,    XXXXXXX,                XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    RGB_TOG,
+        XXXXXXX,    tg_lower,       tg_raise,       kp_toggle,  XXXXXXX,                XXXXXXX,    RGB_VAI,    RGB_SAI,    RGB_HUI,    RGB_MOD,
+        XXXXXXX,    qwerty_base,    colemak_base,   XXXXXXX,    XXXXXXX,                XXXXXXX,    RGB_VAD,    RGB_SAD,    RGB_HUD,    XXXXXXX,
+        XXXXXXX,    _______,        _______,        _______,    _______,                _______,    _______,    _______,    _______,    XXXXXXX
     ),
 
 
@@ -191,19 +191,19 @@ void leader_end_user(void) {
 
 #endif /* LEADER */
 
-layer_state_t layer_state_set_user(layer_state_t state) {
+// layer_state_t layer_state_set_user(layer_state_t state) {
 
-    // switch (get_highest_layer(state)) {
-    //     case 0:
-    //         rgblight_setrgb(RGB_ORANGE);
-    //         break;
-    //     default:
-    //         rgblight_setrgb(RGB_CHARTREUSE);
-    //         break;
-    // }
+//     // switch (get_highest_layer(state)) {
+//     //     case 0:
+//     //         rgblight_setrgb(RGB_ORANGE);
+//     //         break;
+//     //     default:
+//     //         rgblight_setrgb(RGB_CHARTREUSE);
+//     //         break;
+//     // }
 
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
+//     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+// }
 
 
 
@@ -328,65 +328,61 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+const rgblight_segment_t PROGMEM layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 1, HSV_GREEN}
+);
 
-// DEBUG RGB LED (layer switching doesn't happen. Just glows green. Brightness changes reflects.)
-// https://docs.qmk.fm/features/rgblight
+const rgblight_segment_t PROGMEM layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 1, HSV_OFF}
+);
 
-// const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-//     {1, 1, HSV_RED}
-// );
+const rgblight_segment_t PROGMEM layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 1, HSV_OFF}
+);
 
+const rgblight_segment_t PROGMEM layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 1, HSV_OFF}
+);
 
-// const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-//     {1, 1, RGB_ORANGE}
-// );
+const rgblight_segment_t PROGMEM layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 1, HSV_OFF}
+);
 
-// const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-//     {1, 1, HSV_PURPLE}
-// );
+const rgblight_segment_t PROGMEM layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 1, HSV_OFF}
+);
 
-// const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-//     {1, 1, HSV_GREEN}
-// );
+// Define the array of layers
+// _COLEMAK = 0,
+// _QWERTY,
+// _KEYPAD,
+// _LOWER,
+// _RAISE,
+// _ADJUST,
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    layer0_layer,
+    layer1_layer,
+    layer2_layer,
+    layer3_layer,
+    layer4_layer,
+    layer5_layer
+);
 
-// const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-//     {1, 1, HSV_RED}
-// );
+void keyboard_post_init_user(void) {
+    // Enable the RGB lighting layers
+    rgblight_layers = my_rgb_layers;
+}
 
-// const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-//     {1, 1, RGB_CHARTREUSE}
-// );
+layer_state_t layer_state_set_user(layer_state_t state) {
 
-// // Now define the array of layers. Later layers take precedence
-// const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
-//     // bottom most takes precedence
-//     my_capslock_layer,
-//     my_layer1_layer,
-//     my_layer2_layer,
-//     my_layer3_layer,
-//     my_layer4_layer,
-//     my_layer5_layer
-// );
+    uint16_t tri_state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 
-// void keyboard_post_init_user(void) {
-//     // Enable the LED layers
-//     rgblight_layers = my_rgb_layers;
-// }
+    rgblight_set_layer_state(5, layer_state_cmp(state, _ADJUST));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _RAISE));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _LOWER));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _KEYPAD));
+    rgblight_set_layer_state(1, layer_state_cmp(state, _QWERTY));
+    rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
 
-// bool led_update_user(led_t led_state) {
-//     rgblight_set_layer_state(0, led_state.caps_lock);
-//     return true;
-// }
-
-// layer_state_t default_layer_state_set_user(layer_state_t state) {
-//     rgblight_set_layer_state(1, layer_state_cmp(state, _COLEMAK));
-//     return state;
-// }
-
-// layer_state_t layer_state_set_user(layer_state_t state) {
-//     rgblight_set_layer_state(2, layer_state_cmp(state, _LOWER));
-//     rgblight_set_layer_state(3, layer_state_cmp(state, _RAISE));
-//     rgblight_set_layer_state(4, layer_state_cmp(state, _ADJUST));
-//     rgblight_set_layer_state(5, layer_state_cmp(state, _KEYPAD));
-//     return state;
-// }
+    return tri_state;
+}

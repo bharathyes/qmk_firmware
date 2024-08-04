@@ -10,6 +10,7 @@ LTO_ENABLE = yes            # Link Time Optimization enabled
 # OPT_DEFS += -DHAL_USE_I2C=TRUE
 
 RGBLIGHT_ENABLE = yes
+RGBLIGHT_LAYERS = yes
 WS2812_DRIVER = vendor
 
 
