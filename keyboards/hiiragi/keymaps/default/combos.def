@@ -1,3 +1,12 @@
+// Layer independent combos
+// Selecting layers to sharing combos
+//  https://github.com/qmk/qmk_firmware/blob/master/docs/features/combo.md#layer-independent-combos
+COMBO_REF_LAYER(4, 4)
+COMBO_REF_LAYER(5, 5)
+DEFAULT_REF_LAYER(0)
+
+
+
 // regular used keys
 COMB(qwEsc,             KC_ESC,         KC_Q, KC_W)
 COMB(fpTab,             KC_TAB,         KC_F, KC_P)

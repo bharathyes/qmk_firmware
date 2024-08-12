@@ -122,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_KEYPAD] = LAYOUT_ortho_4x10(
         KC_MUTE,     KC_MPRV,       KC_MPLY,    KC_MNXT,    KC_VOLU,                   KC_PSLS,     KC_7,       KC_8,       KC_9,       KC_PAST,
         KC_LGUI,     KC_LALT,       KC_LSFT,    KC_LCTL,    KC_VOLD,                   XXXXXXX,     KC_4,       KC_5,       KC_6,       KC_PMNS,
-        tgl_boot,    reset_kb,      XXXXXXX,    XXXXXXX,    XXXXXXX,                   KC_0,        KC_1,       KC_2,       KC_3,       KC_PPLS,
+        tgl_boot,    reset_kb,      tg_lower,   tg_raise,   kp_toggle,                 KC_0,        KC_1,       KC_2,       KC_3,       KC_PPLS,
         XXXXXXX,    _______,        lowers_bs,  KC_SPC,     _______,                   _______,     ent_sft,     mo_raise,    _______,    XXXXXXX
     ),
 };
@@ -199,9 +199,9 @@ void leader_end_user(void) {
 
 #endif /* LEADER */
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+// }
 
 
 
@@ -233,8 +233,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
     }
 }
-
-
 
 
 /*
