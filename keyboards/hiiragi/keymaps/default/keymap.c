@@ -32,6 +32,7 @@ enum layer_number {
 #define kp_toggle       TG(_KEYPAD)
 #define lowers_bs       LT(_LOWER, KC_BSPC)
 #define ent_sft         LSFT_T(KC_ENT)
+#define bspc_gui        LGUI_T(KC_BSPC)
 
 
 // custom keybinds
@@ -42,6 +43,13 @@ enum layer_number {
 #define ctrl_esc        LCTL_T(KC_ESC)
 #define l_flower        S(KC_LBRC)
 #define r_flower        S(KC_RBRC)
+
+#define undo            C(KC_Z)
+#define redo            C(S(KC_Z))
+#define cut             C(KC_X)
+#define copy            C(KC_C)
+#define paste           C(KC_V)
+#define find            C(KC_F)
 
 // intellij IDE keybinds
 // #define toggle_line_breakpoint  C(KC_F8)
@@ -65,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,                       KC_J,           KC_L,           KC_U,           KC_Y,           KC_SCLN,
         LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),                HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O),
         KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,                       KC_K,           KC_H,           KC_COMM,        KC_DOT,         KC_SLSH,
-        XXXXXXX,        esc,            mo_lower,       KC_SPC,         kp_tab,                     QK_LEAD,        ent_sft,        mo_raise,       KC_BSPC,        XXXXXXX
+        XXXXXXX,        bspc_gui,       mo_lower,       KC_SPC,         kp_tab,                     QK_LEAD,        ent_sft,        mo_raise,       ctrl_esc,       XXXXXXX
     ),
 
 
@@ -75,16 +83,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,
         LGUI_T(KC_A),   LALT_T(KC_S),   LSFT_T(KC_D),   LCTL_T(KC_F),   MEH_T(KC_G),                    HYPR_T(KC_H),   LCTL_T(KC_J),   LSFT_T(KC_K),   LALT_T(KC_L),   LGUI_T(KC_N),
         KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                           KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,
-        XXXXXXX,        esc,            mo_lower,       KC_SPC,         kp_tab,                         QK_LEAD,        ent_sft,        mo_raise,       KC_BSPC,        XXXXXXX
+        XXXXXXX,        bspc_gui,       mo_lower,       KC_SPC,         kp_tab,                         QK_LEAD,        ent_sft,        mo_raise,       ctrl_esc,       XXXXXXX
     ),
 
 
     // ---------- SYMBOLS & Function keys --------------------------- //
 
     [_LOWER] = LAYOUT_ortho_4x10(
-        KC_AMPR,            KC_ASTR,            KC_LPRN,            KC_RPRN,            KC_BSPC,                    KC_LBRC,    KC_F7,          KC_F8,              KC_F9,      pipe,
-        LGUI_T(KC_EXLM),    LALT_T(KC_AT),      LSFT_T(KC_HASH),    CTL_T(KC_DLR),      MEH_T(KC_PERC),             KC_RBRC,    CTL_T(KC_F4),   LSFT_T(KC_F5),      KC_F6,      l_flower,
-        KC_MINUS,           underscore,         KC_EQL,             KC_BSLS,            pipe,                       KC_SLSH,    KC_F1,          KC_F2,              KC_F3,      r_flower,
+        KC_AMPR,            KC_ASTR,            KC_LPRN,            KC_RPRN,            KC_BSPC,                    KC_LBRC,    KC_F7,          KC_F8,              KC_F9,      KC_F10,
+        LGUI_T(KC_EXLM),    LALT_T(KC_AT),      LSFT_T(KC_HASH),    CTL_T(KC_DLR),      MEH_T(KC_PERC),             KC_RBRC,    CTL_T(KC_F4),   LSFT_T(KC_F5),      KC_F6,      KC_F11,
+        KC_MINUS,           KC_EQL,             KC_BSLS,            pipe,               KC_GRV,                     KC_SLSH,    KC_F1,          KC_F2,              KC_F3,      KC_F12,
         XXXXXXX,            _______,            _______,            _______,            _______,                    _______,    _______,        _______,            _______,    XXXXXXX
     ),
 
@@ -93,9 +101,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_RAISE] = LAYOUT_ortho_4x10(
         KC_MS_L,     KC_MS_D,     KC_MS_U,      KC_MS_R,       KC_BTN1,                     KC_PGUP,       KC_HOME,       KC_UP,         KC_END,        KC_MS_WH_UP,
-        KC_LGUI,     KC_LALT,     KC_LSFT,      KC_LCTL,       KC_FIND,                     KC_PGDN,       KC_LEFT,       KC_DOWN,       KC_RIGHT,      KC_MS_WH_DOWN,
-        KC_UNDO,     KC_CUT,      KC_COPY,      XXXXXXX,       KC_PASTE,                    XXXXXXX,       KC_BTN1,       XXXXXXX,       KC_BTN2,       XXXXXXX,
-        XXXXXXX, _______, _______, _______, _______,  _______, _______,  _______, _______, XXXXXXX
+        KC_LGUI,     KC_LALT,     KC_LSFT,      KC_LCTL,       find,                        KC_PGDN,       KC_LEFT,       KC_DOWN,       KC_RIGHT,      KC_MS_WH_DOWN,
+        undo,        cut,         copy,         redo,          paste,                       XXXXXXX,       KC_BTN1,       XXXXXXX,       KC_BTN2,       XXXXXXX,
+        XXXXXXX, _______, _______, _______, _______,  _______, _______,  _______, _______,  XXXXXXX
     ),
 
 
@@ -191,19 +199,9 @@ void leader_end_user(void) {
 
 #endif /* LEADER */
 
-// layer_state_t layer_state_set_user(layer_state_t state) {
-
-//     // switch (get_highest_layer(state)) {
-//     //     case 0:
-//     //         rgblight_setrgb(RGB_ORANGE);
-//     //         break;
-//     //     default:
-//     //         rgblight_setrgb(RGB_CHARTREUSE);
-//     //         break;
-//     // }
-
-//     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-// }
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
 
 
 
@@ -328,6 +326,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+/**
+
+FIXME:
+        WIP incomprehensible RGB as layer indicator
+        Unable to follow defined logic and observed behavior
+
+
 const rgblight_segment_t PROGMEM layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {0, 1, HSV_GREEN}
 );
@@ -386,3 +391,46 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
     return tri_state;
 }
+
+*/
+
+// RGB Matrix seemingly is for external IC driven RGB
+// RGB as layer indicator
+//   https://docs.qmk.fm/features/rgb_matrix#callbacks
+
+/*
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+
+    if (host_keyboard_led_state().caps_lock) {
+        RGB_MATRIX_INDICATOR_SET_COLOR(led_min, 255, 0, 0);
+    }
+    else {
+        HSV hsv = { 0, 255, 255};
+
+        if (layer_state_is(layer_state, 2)) {
+            hsv = (HSV){130, 255, 255};
+        } else {
+            hsv = (HSV){30, 255, 255};
+        }
+
+        if (hsv.v > rgb_matrix_get_val()) {
+            hsv.v = rgb_matrix_get_val();
+        }
+
+        RGB rgb = hsv_to_rgb(hsv);
+
+        // for (uint8t i = led_min; i < led_max; i++) {
+            // if (HAS_FLAGS(g_led_config.flags[i], 0x01)) {  // 0x01 == LED_FLAG_MODIFIER
+        rgb_matrix_set_color(led_min, rgb.r, rgb.g, rgb.b);
+            // }
+        // }
+    }
+
+    return false;
+}
+
+void keyboard_post_init_user(void) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv_noeeprom(HSV_OFF);
+}
+*/
