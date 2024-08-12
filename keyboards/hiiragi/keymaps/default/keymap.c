@@ -332,6 +332,7 @@ FIXME:
         WIP incomprehensible RGB as layer indicator
         Unable to follow defined logic and observed behavior
 
+*/
 
 const rgblight_segment_t PROGMEM layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {0, 1, HSV_GREEN}
@@ -391,46 +392,3 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
     return tri_state;
 }
-
-*/
-
-// RGB Matrix seemingly is for external IC driven RGB
-// RGB as layer indicator
-//   https://docs.qmk.fm/features/rgb_matrix#callbacks
-
-/*
-bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-
-    if (host_keyboard_led_state().caps_lock) {
-        RGB_MATRIX_INDICATOR_SET_COLOR(led_min, 255, 0, 0);
-    }
-    else {
-        HSV hsv = { 0, 255, 255};
-
-        if (layer_state_is(layer_state, 2)) {
-            hsv = (HSV){130, 255, 255};
-        } else {
-            hsv = (HSV){30, 255, 255};
-        }
-
-        if (hsv.v > rgb_matrix_get_val()) {
-            hsv.v = rgb_matrix_get_val();
-        }
-
-        RGB rgb = hsv_to_rgb(hsv);
-
-        // for (uint8t i = led_min; i < led_max; i++) {
-            // if (HAS_FLAGS(g_led_config.flags[i], 0x01)) {  // 0x01 == LED_FLAG_MODIFIER
-        rgb_matrix_set_color(led_min, rgb.r, rgb.g, rgb.b);
-            // }
-        // }
-    }
-
-    return false;
-}
-
-void keyboard_post_init_user(void) {
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
-    rgb_matrix_sethsv_noeeprom(HSV_OFF);
-}
-*/
