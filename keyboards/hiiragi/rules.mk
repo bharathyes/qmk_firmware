@@ -17,6 +17,7 @@ WS2812_DRIVER = vendor
 KEY_OVERRIDE_ENABLE = yes       # alters the keycode sent for certain combos
 CAPS_WORD_ENABLE = yes          # caps till whitespace character
 LEADER_ENABLE = yes
+REPEAT_KEY_ENABLE = yes
 UNICODE_COMMON = no
 UNICODEMAP_ENABLE = no
 TRI_LAYER_ENABLE = yes      # lower + raise gives adjust layer ( tri-layer )

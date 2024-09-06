@@ -14,6 +14,11 @@ enum layer_number {
   _ADJUST,
 };
 
+enum custom_keycodes {
+    M_AFK = SAFE_RANGE,
+    M_UPDIR,
+    // Other custom keys...
+};
 
 
 // layer aliases
@@ -61,7 +66,7 @@ enum layer_number {
 
 
 // qmk keycodes
-#define tgl_boot        QK_BOOT     // put into bootloader mode for flashing
+#define tgl_boot        QK_BOOT     // put into bootloader mode for jing
 #define reset_kb        QK_RBT      // reset keeb. does NOT put in bootloader
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -73,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,                       KC_J,           KC_L,           KC_U,           KC_Y,           KC_SCLN,
         LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),                HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O),
         KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,                       KC_K,           KC_H,           KC_COMM,        KC_DOT,         KC_SLSH,
-        XXXXXXX,        bspc_gui,       mo_lower,       KC_SPC,         kp_tab,                     QK_LEAD,        ent_sft,        mo_raise,       ctrl_esc,       XXXXXXX
+        XXXXXXX,        bspc_gui,       mo_lower,       KC_SPC,         kp_tab,                     QK_REP,         ent_sft,        mo_raise,       ctrl_esc,       XXXXXXX
     ),
 
 
@@ -83,14 +88,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,
         LGUI_T(KC_A),   LALT_T(KC_S),   LSFT_T(KC_D),   LCTL_T(KC_F),   MEH_T(KC_G),                    HYPR_T(KC_H),   LCTL_T(KC_J),   LSFT_T(KC_K),   LALT_T(KC_L),   LGUI_T(KC_N),
         KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                           KC_N,           KC_M,           KC_COMM,        KC_DOT,         KC_SLSH,
-        XXXXXXX,        bspc_gui,       mo_lower,       KC_SPC,         kp_tab,                         QK_LEAD,        ent_sft,        mo_raise,       ctrl_esc,       XXXXXXX
+        XXXXXXX,        bspc_gui,       mo_lower,       KC_SPC,         kp_tab,                         QK_REP,         ent_sft,        mo_raise,       ctrl_esc,       XXXXXXX
     ),
 
 
     // ---------- SYMBOLS & Function keys --------------------------- //
 
     [_LOWER] = LAYOUT_ortho_4x10(
-        KC_AMPR,            KC_ASTR,            KC_LPRN,            KC_RPRN,            KC_BSPC,                    KC_LBRC,    KC_F7,          KC_F8,              KC_F9,      KC_F10,
+        KC_AMPR,            KC_ASTR,            KC_LPRN,            KC_RPRN,            KC_MINUS,                    KC_LBRC,    KC_F7,          KC_F8,              KC_F9,      KC_F10,
         LGUI_T(KC_EXLM),    LALT_T(KC_AT),      LSFT_T(KC_HASH),    CTL_T(KC_DLR),      MEH_T(KC_PERC),             KC_RBRC,    CTL_T(KC_F4),   LSFT_T(KC_F5),      KC_F6,      KC_F11,
         KC_MINUS,           KC_EQL,             KC_BSLS,            pipe,               KC_GRV,                     KC_SLSH,    KC_F1,          KC_F2,              KC_F3,      KC_F12,
         XXXXXXX,            _______,            _______,            _______,            _______,                    _______,    _______,        _______,            _______,    XXXXXXX
@@ -101,8 +106,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_RAISE] = LAYOUT_ortho_4x10(
         KC_MS_L,     KC_MS_D,     KC_MS_U,      KC_MS_R,       KC_BTN1,                     KC_PGUP,       KC_HOME,       KC_UP,         KC_END,        KC_MS_WH_UP,
-        KC_LGUI,     KC_LALT,     KC_LSFT,      KC_LCTL,       find,                        KC_PGDN,       KC_LEFT,       KC_DOWN,       KC_RIGHT,      KC_MS_WH_DOWN,
-        undo,        cut,         copy,         redo,          paste,                       XXXXXXX,       KC_BTN1,       XXXXXXX,       KC_BTN2,       XXXXXXX,
+        KC_LGUI,     KC_LALT,     KC_LSFT,      KC_LCTL,       MEH_T(KC_EQL),               KC_PGDN,       KC_LEFT,       KC_DOWN,       KC_RIGHT,      KC_MS_WH_DOWN,
+        undo,        cut,         copy,         redo,          paste,                       QK_LEAD,       KC_BTN1,       QK_AREP,       KC_BTN2,       XXXXXXX,
         XXXXXXX, _______, _______, _______, _______,  _______, _______,  _______, _______,  XXXXXXX
     ),
 
@@ -276,6 +281,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Mod Tap intercepted. Modded tap behaviour limitation override.
     //  ref: https://docusaurus.qmk.fm/mod_tap#intercepting-mod-taps
   switch (keycode) {
+    case M_AFK:
+        SEND_STRING(/*A*/"way from keyboard."); break;
+    case M_UPDIR:
+        SEND_STRING(/*.*/"./"); break;
     case LGUI_T(KC_EXLM):
         if (record->tap.count && record->event.pressed) {
             tap_code16(KC_EXLM);
@@ -389,4 +398,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
 
     return tri_state;
+}
+
+uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
+    switch (keycode) {
+        case KC_A: return M_AFK;
+        case KC_DOT: return M_UPDIR;
+    }
+    return KC_TRNS;
 }
