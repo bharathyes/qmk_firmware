@@ -95,9 +95,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ---------- SYMBOLS & Function keys --------------------------- //
 
     [_LOWER] = LAYOUT_ortho_4x10(
-        KC_AMPR,            KC_ASTR,            KC_LPRN,            KC_RPRN,            KC_MINUS,                    KC_LBRC,    KC_F7,          KC_F8,              KC_F9,      KC_F10,
-        LGUI_T(KC_EXLM),    LALT_T(KC_AT),      LSFT_T(KC_HASH),    CTL_T(KC_DLR),      MEH_T(KC_PERC),             KC_RBRC,    CTL_T(KC_F4),   LSFT_T(KC_F5),      KC_F6,      KC_F11,
-        KC_MINUS,           KC_EQL,             KC_BSLS,            pipe,               KC_GRV,                     KC_SLSH,    KC_F1,          KC_F2,              KC_F3,      KC_F12,
+        KC_AMPR,            KC_ASTR,            KC_LPRN,            KC_RPRN,            KC_LBRC,                    KC_RBRC,    KC_F7,          KC_F8,              KC_F9,      KC_F10,
+        LGUI_T(KC_EXLM),    LALT_T(KC_AT),      LSFT_T(KC_HASH),    CTL_T(KC_DLR),      MEH_T(KC_PERC),             KC_MINUS,   CTL_T(KC_F4),   LSFT_T(KC_F5),      KC_F6,      KC_F11,
+        KC_EQL,             KC_MINUS,           KC_BSLS,            pipe,               KC_SLSH,                    KC_GRV,     KC_F1,          KC_F2,              KC_F3,      KC_F12,
         XXXXXXX,            _______,            _______,            _______,            _______,                    _______,    _______,        _______,            _______,    XXXXXXX
     ),
 
@@ -312,6 +312,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MEH_T(KC_PERC):
         if (record->tap.count && record->event.pressed) {
             tap_code16(KC_PERC);
+            return false;
+        }
+        break;
+    case MEH_T(KC_EQL):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_EQL);
             return false;
         }
         break;
