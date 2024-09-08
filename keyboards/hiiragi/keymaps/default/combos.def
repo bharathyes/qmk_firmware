@@ -28,15 +28,16 @@ COMB(paste,             C(KC_V),        KC_D, KC_V)
 
 // Symbol
 
-COMB(graVe,             KC_GRV,         KC_COMM , KC_DOT)
-COMB(equalsTo,          KC_EQL,         KC_DOT , KC_SLSH)
-COMB(powerOf,           KC_CIRC,        KC_COMM, KC_DOT , KC_SLSH)
-COMB(tilde,             KC_TILD,        KC_W , KC_F)
+COMB(graVe,             KC_GRV,         KC_W , KC_F)
 COMB(pipeLinux,         KC_PIPE,        KC_B , KC_P)
-COMB(dblQuote,          S(KC_QUOT),     KC_U , KC_Y)
-COMB(semicolon,         S(KC_SCLN),     KC_Y, KC_SCLN)
-COMB(singleQuote,       KC_QUOT,        KC_U , KC_Y,KC_SCLN)
 
+COMB(dblQuote,          S(KC_QUOT),     KC_U , KC_Y)
+COMB(colon,             S(KC_SCLN),     KC_Y, KC_SCLN)
+COMB(equalsTo,          KC_EQL,         KC_U , KC_Y, KC_SCLN)
+
+COMB(singleQuote,       KC_QUOT,        KC_COMM , KC_DOT)
+COMB(backSlach,         KC_BSLS,        KC_DOT , KC_SLSH)
+COMB(powerOf,           KC_CIRC,        KC_COMM, KC_DOT , KC_SLSH)
 
 // my frequently used words
 SUBS(afk_lunch,             "Away from keyboard for lunch ", KC_F, KC_K)
