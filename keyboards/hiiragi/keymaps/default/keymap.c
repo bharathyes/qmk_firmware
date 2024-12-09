@@ -37,6 +37,9 @@ enum custom_keycodes {
 #define kp_tab          LT(_KEYPAD, KC_TAB)
 #define kp_toggle       TG(_KEYPAD)
 #define nump_toggle     TG(_NUMPAD)
+// #define mo_numpad       MO(_NUMPAD)
+#define npad_q          LT(_NUMPAD, KC_Q)
+#define clmk_GUI        LM(_COLEMAK, MOD_LGUI)
 #define lowers_bs       LT(_LOWER, KC_BSPC)
 #define ent_sft         LSFT_T(KC_ENT)
 #define bspc_gui        LGUI_T(KC_BSPC)
@@ -77,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // ---------- COLEMAK --------------------------- //
 
     [_COLEMAK] = LAYOUT_ortho_4x10(
-        KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,                       KC_J,           KC_L,           KC_U,           KC_Y,           KC_SCLN,
+        npad_q,         KC_W,           KC_F,           KC_P,           KC_B,                       KC_J,           KC_L,           KC_U,           KC_Y,           KC_SCLN,
         LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),                HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O),
         KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,                       KC_K,           KC_H,           KC_COMM,        KC_DOT,         KC_SLSH,
         XXXXXXX,        bspc_gui,       mo_lower,       KC_SPC,         kp_tab,                     QK_REP,         ent_sft,        mo_raise,       ctrl_esc,       XXXXXXX
@@ -138,8 +141,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NUMPAD] = LAYOUT_ortho_4x10(
         nump_toggle,    KC_MPRV,        KC_MPLY,    KC_MNXT,    KC_VOLU,                    KC_PSLS,     KC_KP_7,       KC_KP_8,        KC_KP_9,        KC_PAST,
-        KC_LGUI,        KC_LALT,        KC_LSFT,    KC_LCTL,    KC_VOLD,                    KC_DOT,      KC_KP_4,       KC_KP_5,        KC_KP_6,        KC_PMNS,
-        KC_MUTE,        XXXXXXX,        tg_lower,   tg_raise,   kp_toggle,                  KC_KP_0,     KC_KP_1,       KC_KP_2,        KC_KP_3,        KC_PPLS,
+        KC_LGUI,        KC_LALT,        KC_LSFT,    KC_LCTL,    KC_VOLD,                    KC_DOT,      KC_KP_4,       KC_KP_5,        KC_KP_6,        clmk_GUI,
+        KC_MUTE,        XXXXXXX,        tg_lower,   tg_raise,   kp_toggle,                  KC_KP_0,     KC_KP_1,       KC_KP_2,        KC_KP_3,        KC_PDOT,
         XXXXXXX,        _______,        lowers_bs,  KC_SPC,     kp_tab,                     _______,     ent_sft,       mo_raise,       _______,        XXXXXXX
     ),
 };
