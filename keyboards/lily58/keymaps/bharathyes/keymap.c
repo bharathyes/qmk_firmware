@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ctrl_esc,     LGUI_T(KC_A),   LALT_T(KC_R),   LSFT_T(KC_S),   LCTL_T(KC_T),   MEH_T(KC_G),
                 HYPR_T(KC_M),   LCTL_T(KC_N),   LSFT_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O), KC_MINS,
   l_shft,       KC_Z,   KC_X,   KC_C,    KC_D,     KC_V,   QK_LEAD,    KC_DEL,     KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
-        LALT_T(KC_ENT), KC_LGUI,    mo_lower,     KC_SPC,             ent_sft,     mo_raise,     XXXXXXX,    KC_BSLS
+        LALT_T(KC_ENT), KC_LGUI,    mo_lower,     KC_SPC,             ent_sft,     mo_raise,     ctrl_esc,    KC_BSLS
 
 ),
 
