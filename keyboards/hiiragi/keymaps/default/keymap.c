@@ -9,6 +9,7 @@ enum layer_number {
   _COLEMAK = 0,
   _QWERTY,
   _KEYPAD,
+  _NUMPAD,
   _LOWER,
   _RAISE,
   _ADJUST,
@@ -35,6 +36,7 @@ enum custom_keycodes {
 // custom layer combos
 #define kp_tab          LT(_KEYPAD, KC_TAB)
 #define kp_toggle       TG(_KEYPAD)
+#define nump_toggle     TG(_NUMPAD)
 #define lowers_bs       LT(_LOWER, KC_BSPC)
 #define ent_sft         LSFT_T(KC_ENT)
 #define bspc_gui        LGUI_T(KC_BSPC)
@@ -116,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ADJUST] = LAYOUT_ortho_4x10(
         XXXXXXX,    XXXXXXX,        XXXXXXX,        XXXXXXX,    XXXXXXX,                XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    RGB_TOG,
-        XXXXXXX,    tg_lower,       tg_raise,       kp_toggle,  XXXXXXX,                XXXXXXX,    RGB_VAI,    RGB_SAI,    RGB_HUI,    RGB_MOD,
+        XXXXXXX,    tg_lower,       tg_raise,       kp_toggle,  nump_toggle,            XXXXXXX,    RGB_VAI,    RGB_SAI,    RGB_HUI,    RGB_MOD,
         XXXXXXX,    qwerty_base,    colemak_base,   XXXXXXX,    XXXXXXX,                XXXXXXX,    RGB_VAD,    RGB_SAD,    RGB_HUD,    XXXXXXX,
         XXXXXXX,    _______,        _______,        _______,    _______,                _______,    _______,    _______,    _______,    XXXXXXX
     ),
@@ -129,6 +131,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LGUI,     KC_LALT,       KC_LSFT,    KC_LCTL,    KC_VOLD,                   KC_DOT,      KC_4,       KC_5,       KC_6,       KC_PMNS,
         tgl_boot,    reset_kb,      tg_lower,   tg_raise,   kp_toggle,                 KC_0,        KC_1,       KC_2,       KC_3,       KC_PPLS,
         XXXXXXX,    _______,        lowers_bs,  KC_SPC,     _______,                   _______,     ent_sft,     mo_raise,    _______,    XXXXXXX
+    ),
+
+
+    // ---------- NumPAD  & MPV controls --------------------------- //
+
+    [_NUMPAD] = LAYOUT_ortho_4x10(
+        nump_toggle,    KC_MPRV,        KC_MPLY,    KC_MNXT,    KC_VOLU,                    KC_PSLS,     KC_KP_7,       KC_KP_8,        KC_KP_9,        KC_PAST,
+        KC_LGUI,        KC_LALT,        KC_LSFT,    KC_LCTL,    KC_VOLD,                    KC_DOT,      KC_KP_4,       KC_KP_5,        KC_KP_6,        KC_PMNS,
+        KC_MUTE,        XXXXXXX,        tg_lower,   tg_raise,   kp_toggle,                  KC_KP_0,     KC_KP_1,       KC_KP_2,        KC_KP_3,        KC_PPLS,
+        XXXXXXX,        _______,        lowers_bs,  KC_SPC,     kp_tab,                     _______,     ent_sft,       mo_raise,       _______,        XXXXXXX
     ),
 };
 
@@ -400,6 +412,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(4, layer_state_cmp(state, _RAISE));
     rgblight_set_layer_state(3, layer_state_cmp(state, _LOWER));
     rgblight_set_layer_state(2, layer_state_cmp(state, _KEYPAD));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _NUMPAD));
     rgblight_set_layer_state(1, layer_state_cmp(state, _QWERTY));
     rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
 
